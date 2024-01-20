@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") 
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+model BarangTb {
+  id         Int      @id @default(autoincrement())
+  kodeBarang String   @unique
+  namaBarang String
+  kategoriId Int
+  merek      String
+  unit       String
+  hargaModal Int
+  hargaJual  Int
+  stok       Int
+  foto       String?
+  deskripsi  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  KategoriTb         KategoriTb           @relation(fields: [kategoriId], references: [id], onDelete: Cascade)
+  DetailtambahstokTb DetailtambahstokTb[]
+  DetailJualTb       DetailJualTb[]
+}
+
+model KategoriTb {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  BarangTb BarangTb[]
+}
+
+model TambahstokTb {
+  id         Int      @id @default(autoincrement())
+  nofaktur   String   @unique
+  tanggal    DateTime
+  admin      String
+  totalItem  Int
+  totalBayar Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  DetailtambahstokTb DetailtambahstokTb[]
+}
+
+model DetailtambahstokTb {
+  id         Int      @id @default(autoincrement())
+  barangId   Int
+  nofakturId String
+  hargaModal Int
+  hargaJual  Int
+  qty        Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  BarangTb     BarangTb     @relation(fields: [barangId], references: [id], onDelete: Cascade)
+  TambahstokTb TambahstokTb @relation(fields: [nofakturId], references: [nofaktur], onDelete: Cascade)
+}
+
+model TransaksiTB {
+  id         Int      @id @default(autoincrement())
+  nofaktur   String   @unique
+  tanggal    DateTime @default(now())
+  kasir      String
+  totalItem  Int
+  totalBayar Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  DetailJualTb DetailJualTb[]
+}
+
+model DetailJualTb {
+  id         Int      @id @default(autoincrement())
+  barangId   Int
+  nofakturId String
+  hargaModal Int
+  hargaJual  Int
+  qty        Int
+  tanggal    DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  BarangTb    BarangTb    @relation(fields: [barangId], references: [id], onDelete: Cascade)
+  TransaksiTB TransaksiTB @relation(fields: [nofakturId], references: [nofaktur], onDelete: Cascade)
+}
+
+model KaryawanTb {
+  id           Int      @id @default(autoincrement())
+  nama         String
+  tempatLahir  String
+  tanggalLahir DateTime
+  alamat       String
+  hp           String   @unique
+  email        String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  UserTb UserTb?
+}
+
+model UserTb {
+  id         Int      @id @default(autoincrement())
+  karyawanId Int      @unique
+  usernama   String   @unique
+  password   String
+  status     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  KaryawanTb KaryawanTb @relation(fields: [karyawanId], references: [id], onDelete: Cascade)
+}
