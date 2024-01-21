@@ -74,8 +74,9 @@ const Login = () => {
           <div className="col-lg-6 col-md-12 col-sm-12 mx-auto align-self-center">
             <div className="login-form">
               <div className="text-center">
-                <h3 className="title">Sign In</h3>
-                {/* <p>Login </p> */}
+              <img src="/tema/images/2.png" width='300' height='160' className="mb-0" alt="" />
+                {/* <h3 className="title">Selamat Datang</h3> */}
+                <p>Selamat Datang </p>
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -121,23 +122,7 @@ const Login = () => {
               </form>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6">
-            <div className="pages-left h-100">
-              <div className="login-content">
-                <a href="index-2.html">
-                  <img src="/tema/images/2.png" className="mb-0" alt="" />
-                </a>
-                <p>
-                  {/* Your true value is determined by how much more you give in value
-                    than you take in payment. ... */}
-                </p>
-              </div>
-              <div className="login-media text-center">
-                {/* <img src="/tema/images/error.png" alt="" /> */}
-                <img src="/tema/images/login.png" alt="" />
-              </div>
-            </div>
-          </div>
+         
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ const xxx=session.data
     return (
         <div>
             <div className="nav-header">
-                <a href="#" className="brand-logo">
+                <a href="/" className="brand-logo">
                     <svg
                         className="logo-abbr"
                         width={51}
