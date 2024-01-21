@@ -31598,6 +31598,11 @@ table.dataTable thead .sorting_asc {
     .authincation .login-aside .aside-image {
       min-height: 300px; } }
 
+.common-img-bg {
+  background-size: cover;
+  background: url(../images/bg.jpg) no-repeat center center fixed;
+  height: 100%; }
+
 .auth-form {
   padding: 50px 50px; }
   @media only screen and (max-width: 35.9375rem) {
