@@ -53,7 +53,7 @@ const Produk = () => {
       if (barcode == "") {
         return
       }
-
+      const barcodeForSearch = barcode.toLowerCase(); 
       const response = await axios.get(`/api/barang/${barcode}`);
       const xxx = response.data
       if (xxx === null) {
@@ -91,7 +91,7 @@ const Produk = () => {
             </div>
             <div className="card-body">
               <div className="row mb-3">
-                <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Scan Barcode</label>
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Scan Barcode</label>
                 <div className="col-sm-3">
                   <div className="input-group mb-3  input-success">
                     <input type="text"
@@ -171,7 +171,7 @@ const Produk = () => {
                         {rupiah(hargaJual)}
                       </span>
                     </div>
-                   
+
                   </div>
                 </div>
                 :

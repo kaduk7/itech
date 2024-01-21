@@ -43,7 +43,8 @@ const Produk = () => {
   };
 
   const filteredItems = databarang.filter(
-    (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(filterText.toLowerCase()),
+    (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(filterText.toLowerCase()) ||
+    item.kodeBarang && item.kodeBarang.toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const columns = [
@@ -52,6 +53,11 @@ const Produk = () => {
       cell: (row: any, index: number) => <div>{(currentPage - 1) * itemsPerPage + index + 1}</div>,
       sortable: false,
       width: '80px'
+    },
+    {
+      name: 'No Faktur ',
+      selector: (row: any) => row.kodeBarang,
+      sortable: true,
     },
     {
       name: 'Nama Barang',

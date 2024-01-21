@@ -39,7 +39,8 @@
     "react-to-print": "^2.14.15",
     "sass": "^1.65.1",
     "sweetalert2": "^11.9.0",
-    "tinymce": "^6.7.2"
+    "tinymce": "^6.7.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.1",

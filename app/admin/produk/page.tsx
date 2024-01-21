@@ -5,6 +5,7 @@ import Add from './action/Add';
 import Update from './action/Update';
 import Delete from './action/Delete';
 import { rupiah } from '@/app/helper';
+import * as XLSX from 'xlsx';
 
 const Produk = () => {
 
@@ -86,6 +87,14 @@ const Produk = () => {
 
   ];
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredItems);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'DataBarang');
+    XLSX.writeFile(workbook, 'Data Barang.xlsx');
+  };
+
+
   return (
     <div>
       <div className="row">
@@ -142,6 +151,30 @@ const Produk = () => {
                   },
                 }}
               />
+               {databarang.length > 0 ?
+                <div className="row mb-3">
+                  <div className="col-md-3">
+                    <button type='button' onClick={exportToExcel} className="btn btn-success btn-icon-text">
+                      Ekspor ke Excel
+                    </button>
+                  </div>
+                  <div className="col-md-9 d-flex justify-content-end">
+                    <li>
+                      <button type='button' onClick={exportToExcel} className="btn btn-primary btn-icon-text mx-2">
+                        Download Template
+                      </button>
+                    </li>
+                    <li>
+                      <button type='button' onClick={exportToExcel} className="btn btn-info btn-icon-text">
+                        Import dari Excel
+                      </button>
+                    </li>
+                  </div>
+
+                </div>
+                :
+                null
+              }
             </div>
           </div>
         </div>
