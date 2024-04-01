@@ -495,13 +495,13 @@ const Kasir = () => {
                   <div className="table-responsive">
                     <table className="table">
                       <thead className="">
-                        <tr>
-                          <th className="" style={{ fontSize: 18, color: "black" }}>Kode barang</th>
-                          <th className="" style={{ fontSize: 18, color: "black" }}>Nama barang</th>
-                          <th className="" style={{ fontSize: 18, color: "black" }}>Harga Jual</th>
-                          <th className="" style={{ fontSize: 18, color: "black" }}>Qty</th>
-                          <th className="" style={{ fontSize: 18, color: "black" }}>SubTotal</th>
-                          <th className="" style={{ fontSize: 18, color: "black" }}></th>
+                        <tr className="table-header">
+                          <th className="" style={{ fontSize: 17, color: "black" }}>Kode barang</th>
+                          <th className="" style={{ fontSize: 17, color: "black" }}>Nama barang</th>
+                          <th className="" style={{ fontSize: 17, color: "black" }}>Harga Jual</th>
+                          <th className="" style={{ fontSize: 17, color: "black" }}>Qty</th>
+                          <th className="" style={{ fontSize: 17, color: "black" }}>SubTotal</th>
+                          <th className="" style={{ fontSize: 17, color: "black" }}></th>
                         </tr>
                       </thead>
                       <tbody>

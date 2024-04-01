@@ -5213,6 +5213,12 @@ textarea.form-control-lg {
   --bs-spinner-width: 1rem;
   --bs-spinner-height: 1rem; }
 
+  .table-header {
+    background-color: #53d0b2;
+    color: black;
+    font-size: 18px;
+  }
+
 @media (prefers-reduced-motion: reduce) {
   .spinner-border,
   .spinner-grow {

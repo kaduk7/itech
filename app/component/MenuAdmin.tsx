@@ -54,7 +54,7 @@ export default function MenuAdmin() {
                             <div className="menu-icon">
                                 <svg
                                     viewBox="0 0 20 20"
-                                    fill="currentColor"
+                                    fill="none"
                                     width={25} height={24}
                                 >
                                     <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
@@ -68,11 +68,14 @@ export default function MenuAdmin() {
                         <Link href="/kasir/transaksi" className="" aria-expanded="false">
                             <div className="menu-icon">
                                 <svg
-                                    viewBox="0 0 20 20"
+                                    viewBox="0 0 16 16"
                                     fill="currentColor"
                                     width={25} height={24}
                                 >
-                                    <path d="M10 20a10 10 0 110-20 10 10 0 010 20zm1-5h1a3 3 0 000-6H7.99a1 1 0 010-2H14V5h-3V3H9v2H8a3 3 0 100 6h4a1 1 0 110 2H6v2h3v2h2v-2z" />
+                                    <path
+                                        fill="none"
+                                        d="M6 14.5a1.5 1.5 0 11-3.001-.001A1.5 1.5 0 016 14.5zM16 14.5a1.5 1.5 0 11-3.001-.001A1.5 1.5 0 0116 14.5zM16 8V2H4a1 1 0 00-1-1H0v1h2l.751 6.438A2 2 0 004 12h12v-1H4a1 1 0 01-1-1v-.01L16 8z"
+                                    />
                                 </svg>
                             </div>
                             <span className="nav-text">Kasir</span>
