@@ -426,29 +426,20 @@ const Kasir = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card">
             <div className="card-header">
-              <div className="mb-1 row">
-                <div className="col-md-6">
-                  <h1 className="card-title " style={{ fontFamily: "initial", fontSize: 30 }}>Kasir</h1>
-                </div>
-
-                <div className="col-md-6 d-flex justify-content-end">
-                  <img src="/tema/images/zzz.png" width={150} />
-
-                </div>
-              </div>
+              <h1 className="card-title " style={{ fontSize: 20 }}>Kasir</h1>
             </div>
             <div className="card-body">
               <form className="" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <div className="mb-3 row">
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>No Faktur</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>No Faktur</label>
                     <div className="col-sm-2">
                       <input
                         disabled={true}
                         required
                         type="text"
                         className="form-control"
-                        style={{ fontFamily: "initial", fontSize: 20, color: "black", borderColor: "grey" }}
+                        style={{ fontSize: 15, color: "black", borderColor: "grey" }}
                         value={nofaktur} onChange={(e) => setNofaktur(e.target.value)}
                       />
                     </div>
@@ -458,13 +449,13 @@ const Kasir = () => {
                   </div>
 
                   <div className="mb-3 row">
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Scan Barcode</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Scan Barcode</label>
                     <div className="col-sm-3">
                       <div className="input-group mb-3  input-success">
                         <input type="text"
                           autoFocus
                           ref={ref}
-                          style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
+                          style={{ backgroundColor: 'white', fontSize: 15, color: "black", borderColor: "grey" }}
                           className="form-control" placeholder="Scan Barcode" aria-label="Username" aria-describedby="basic-addon1"
                           value={barcode} onChange={(e) => setBarcode(e.target.value)}
                           onKeyPress={scanbarcode}
@@ -475,7 +466,7 @@ const Kasir = () => {
 
                     <div className="col-sm-2"></div>
 
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Nama Barang</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Nama Barang</label>
                     <div className="col-sm-3">
                       <AsyncSelect
                         cacheOptions
@@ -489,14 +480,12 @@ const Kasir = () => {
                           control: (baseStyles, state) => ({
                             ...baseStyles,
                             borderColor: state.isFocused ? 'blue' : 'grey',
-                            fontSize: state.isFocused ? 20 : 20,
-                            fontFamily: "initial",
+                            fontSize: state.isFocused ? 15 : 15,
                           }),
                           option: (baseStyles, state) => ({
                             ...baseStyles,
-                            fontSize: 20,
+                            fontSize: 15,
                             color: "black",
-                            fontFamily: "initial",
                           }),
                         }}
                       />
@@ -507,12 +496,12 @@ const Kasir = () => {
                     <table className="table">
                       <thead className="">
                         <tr>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Kode barang</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Nama barang</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Harga Jual</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Qty</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>SubTotal</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}></th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Kode barang</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Nama barang</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Harga Jual</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Qty</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>SubTotal</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -525,7 +514,7 @@ const Kasir = () => {
                                 disabled={true}
                                 value={inputField.kodeBarang}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 200, maxWidth: 200, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 200, maxWidth: 200, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -535,7 +524,7 @@ const Kasir = () => {
                                 disabled={true}
                                 value={inputField.namaBarang}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 250, maxWidth: 250, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 250, maxWidth: 250, color: "black", borderColor: "grey" }}
                               />
                             </td>
 
@@ -548,7 +537,7 @@ const Kasir = () => {
                                 type='number'
                                 value={inputField.hargaJual}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 130, maxWidth: 130, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 130, maxWidth: 130, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -563,7 +552,7 @@ const Kasir = () => {
                                 onKeyPress={qtykey}
                                 onClick={event => selectall(inputField.kodeBarang, event)}
                                 min="1"
-                                style={{ backgroundColor: 'white', width: 80, maxWidth: 80, fontFamily: "initial", fontSize: 20, color: "black", borderColor: "grey" }}
+                                style={{ backgroundColor: 'white', width: 80, maxWidth: 80, fontSize: 15, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -575,7 +564,7 @@ const Kasir = () => {
                                 type='number'
                                 value={inputField.subtotal}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 170, maxWidth: 170, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 160, maxWidth: 160, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -592,25 +581,25 @@ const Kasir = () => {
                       </tfoot>
                     </table>
                     <Row>
-                      <Col md={2} className="mb-4 mt-2">
+                      <Col md={2} className="mb-2 mt-3">
                         <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}></h3>
                       </Col>
-                      <Col md={2} className="mb-4 mt-5">
+                      <Col md={2} className="mb-2 mt-3">
                         <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}></h3>
                       </Col>
-                      <Col md={2} className="mb-4 mt-5">
+                      <Col md={2} className="mb-2 mt-3">
                         <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}></h3>
                       </Col>
-                      <Col md={3} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}>Grand Total</h3>
+                      <Col md={3} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}>Grand Total</h3>
                       </Col>
-                      <Col md={3} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}> {currencyFormat(total)}</h3>
+                      <Col md={3} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}> {currencyFormat(total)}</h3>
                       </Col>
                     </Row>
                   </div>
                 </div>
-                <Col md={5} className="mb-1 mt-5">
+                <Col md={5} className="mb-1">
                   <span className="p-buttonset">
                     <Button label="Save" type="submit" icon="mdi mdi-content-save" className="px-4" severity="info" />
                     <Button label="Cancel" type="button" onClick={refresh} icon="mdi mdi-close-circle" severity="danger" />

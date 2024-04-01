@@ -42,11 +42,12 @@ export const GET = async (request: Request, { params }: { params: { id: string }
 
     const barang = await prisma.barangTb.findUnique({
         where: {
-            kodeBarang: (params.id)
+            kodeBarang: (params.id),
         },
         include:{
             KategoriTb:true,
-        }
+        },
+        
     });
     return NextResponse.json(barang, { status: 200 })
 }

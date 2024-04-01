@@ -141,7 +141,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
 
         const xxx = await axios.patch(`/api/barang/${barang.id}`, formData)
 
-       
+
 
         setTimeout(function () {
             if (xxx.data.pesan === 'berhasil') {
@@ -182,7 +182,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                             <div className="mb-3 col-md-6">
                                 <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kode Barang</label>
                                 <input
-                                    autoFocus
+                                    disabled
                                     required
                                     type="text"
                                     className="form-control"
@@ -193,6 +193,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                             <div className="mb-3 col-md-6">
                                 <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Nama Barang</label>
                                 <input
+                                    autoFocus
                                     required
                                     type="text"
                                     className="form-control"

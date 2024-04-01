@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js"
 import moment from "moment";
+import 'moment/locale/id';
+moment.locale('id');
 
 const currentTime = new Date();
 
@@ -85,28 +87,31 @@ export const warnastatus = (status: any) => {
     }
 };
 
-export const tglIndo = (value: any) => {
-    return moment(value).format("DD-MM-YYYY")
-}
+export function tanggalIndo(tanggal: any) {
+    const tanggalFormatIndonesia = moment(tanggal).format('DD MMMM YYYY');
+    return tanggalFormatIndonesia
+  }
+  
+  export function tanggalHariIni ()  {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const yyyy = today.getFullYear();
+  
+    return `${yyyy}-${mm}-${dd}`;
+  };
+  
+  export function mingguDepan ()  {
+    const today = new Date();
+    today.setDate(today.getDate() + 7);
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const yyyy = today.getFullYear();
+  
+    return `${yyyy}-${mm}-${dd}`;
+  };
 
 export const rupiah = (value: any) => {
     return value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 };
 
-// const loadOptions = (inputValue: any, callback: any) => {
-//     setTimeout(async () => {
-//         if (inputValue.length < 2) {
-//             callback([]);
-//             return;
-//         }
-//         try {
-//             const response = await axios.get(`/api/carikategori/${inputValue}`);
-//             const data = response.data;
-//             const options = data.map((item: any) => ({ label: item.nama, value: item.id }));
-//             callback(options);
-//         } catch (error) {
-//             console.error('Error fetching data:', error);
-//             callback([]);
-//         }
-//     }, 300);
-// };

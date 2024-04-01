@@ -14,17 +14,14 @@ import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Col, Row } from "@themesberg/react-bootstrap";
-import { StyleSelect } from "@/app/helper";
-
-
-
+import { StyleSelect,tanggalHariIni } from "@/app/helper";
 
 const TambahStok = () => {
   const [selected, setSelected] = useState(null)
   const [inputFields, setInputFields] = useState([]);
   const [nofaktur, setNofaktur] = useState('');
   const [barcode, setBarcode] = useState('');
-  const [tanggal, setTanggal] = useState('');
+  const [tanggal, setTanggal] = useState(tanggalHariIni);
   const [total, setTotal] = useState(0);
   const [totalqty, setTotalqty] = useState(0);
   const [admin, setAdmin] = useState("");
@@ -243,33 +240,33 @@ const TambahStok = () => {
     }
 
     // inputFields.forEach(async (item: any) => {
-      const formData = new FormData()
-      formData.append('tanggal', new Date(tanggal).toISOString())
-      formData.append('totalItem', String(totalqty))
-      formData.append('totalBayar', String(total))
-      formData.append('nofaktur', nofaktur)
-      formData.append('admin', admin)
-      formData.append('selected', JSON.stringify(inputFields))
-      // formData.append('barangId', item.id)
-      // formData.append('hargaModal', item.hargaModal)
-      // formData.append('hargaJual', item.hargaJual)
-      // formData.append('qty', item.qty)
-      // formData.append('stokakhir', item.stokakhir)
+    const formData = new FormData()
+    formData.append('tanggal', new Date(tanggal).toISOString())
+    formData.append('totalItem', String(totalqty))
+    formData.append('totalBayar', String(total))
+    formData.append('nofaktur', nofaktur)
+    formData.append('admin', admin)
+    formData.append('selected', JSON.stringify(inputFields))
+    // formData.append('barangId', item.id)
+    // formData.append('hargaModal', item.hargaModal)
+    // formData.append('hargaJual', item.hargaJual)
+    // formData.append('qty', item.qty)
+    // formData.append('stokakhir', item.stokakhir)
 
-      await axios.post(`/api/tambahstok`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      Toast.fire({
-        icon: 'success',
-        title: 'Berhasil disimpan'
-      })
-      setTimeout(function () {
-        refresh();
-        router.refresh()
-        loadOptions
-      }, 1500);
+    await axios.post(`/api/tambahstok`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Berhasil disimpan'
+    })
+    setTimeout(function () {
+      refresh();
+      router.refresh()
+      loadOptions
+    }, 1500);
     // })
 
   };
@@ -543,46 +540,46 @@ const TambahStok = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title" style={{ fontFamily: "initial", fontSize: 30, marginBottom: 10 }}>Tambah Stok</h1>
+              <h1 className="card-title" style={{ fontSize: 20 }}>Tambah Stok</h1>
             </div>
             <div className="card-body">
               <form className="" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <div className="mb-3 row">
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>No Faktur</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>No Faktur</label>
                     <div className="col-sm-2">
                       <input
                         disabled={true}
                         required
                         type="text"
                         className="form-control"
-                        style={{ fontFamily: "initial", fontSize: 20, color: "black", borderColor: "grey" }}
+                        style={{ fontSize: 15, color: "black", borderColor: "grey" }}
                         value={nofaktur} onChange={(e) => setNofaktur(e.target.value)}
                       />
                     </div>
 
                     <div className="col-sm-3"></div>
 
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Tanggal</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Tanggal</label>
                     <div className="col-sm-2">
                       <input
                         required
                         type="date"
                         className="form-control"
-                        style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
+                        style={{ fontSize: 15, color: "black", borderColor: "grey" }}
                         value={tanggal} onChange={(e) => setTanggal(e.target.value)}
                       />
                     </div>
                   </div>
 
                   <div className="mb-3 row">
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Scan Barcode</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Scan Barcode</label>
                     <div className="col-sm-3">
                       <div className="input-group mb-3  input-success">
                         <input type="text"
                           autoFocus
                           ref={ref}
-                          style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
+                          style={{ fontSize: 15, color: "black", borderColor: "grey" }}
                           className="form-control" placeholder="Scan Barcode" aria-label="Username" aria-describedby="basic-addon1"
                           value={barcode} onChange={(e) => setBarcode(e.target.value)}
                           onKeyPress={scanbarcode}
@@ -594,7 +591,7 @@ const TambahStok = () => {
 
                     <div className="col-sm-2"></div>
 
-                    <label className="col-sm-2 col-form-label" style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Nama Barang</label>
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Nama Barang</label>
                     <div className="col-sm-3">
                       <AsyncSelect
                         cacheOptions
@@ -603,7 +600,6 @@ const TambahStok = () => {
                         loadOptions={loadOptions}
                         onChange={handlechange}
                         value={selected}
-
                         styles={StyleSelect}
                       />
                     </div>
@@ -613,13 +609,13 @@ const TambahStok = () => {
                     <table className="table">
                       <thead className="">
                         <tr>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Kode barang</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Nama barang</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Harga Modal</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Harga Jual</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>Qty</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}>SubTotal</th>
-                          <th className="" style={{ fontFamily: "initial", fontWeight: 'bold', fontSize: 20, color: "black" }}></th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Kode barang</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Nama barang</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Harga Modal</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Harga Jual</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>Qty</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}>SubTotal</th>
+                          <th className="" style={{ fontSize: 18, color: "black" }}></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -632,7 +628,7 @@ const TambahStok = () => {
                                 disabled={true}
                                 value={inputField.kodeBarang}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 160, maxWidth: 160, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 160, maxWidth: 160, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -642,7 +638,7 @@ const TambahStok = () => {
                                 disabled={true}
                                 value={inputField.namaBarang}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 220, maxWidth: 220, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 210, maxWidth: 210, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -656,7 +652,7 @@ const TambahStok = () => {
                                 onKeyPress={harmodalkey}
                                 onClick={event => selectallharmodal(inputField.kodeBarang, event)}
                                 min="1"
-                                style={{ backgroundColor: 'white', fontFamily: "initial", fontSize: 20, width: 120, maxWidth: 120, color: "black", borderColor: "grey" }}
+                                style={{ backgroundColor: 'white', fontSize: 15, width: 110, maxWidth: 110, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -670,7 +666,7 @@ const TambahStok = () => {
                                 onKeyPress={harjulkey}
                                 onClick={event => selectallharjul(inputField.kodeBarang, event)}
                                 min="1"
-                                style={{ backgroundColor: 'white', fontFamily: "initial", fontSize: 20, width: 120, maxWidth: 120, color: "black", borderColor: "grey" }}
+                                style={{ backgroundColor: 'white', fontSize: 15, width: 110, maxWidth: 110, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -684,7 +680,7 @@ const TambahStok = () => {
                                 min="1"
                                 value={inputField.qty}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ backgroundColor: 'white', width: 75, maxWidth: 75, fontFamily: "initial", fontSize: 20, color: "black", borderColor: "grey" }}
+                                style={{ backgroundColor: 'white', width: 75, maxWidth: 75, fontSize: 15, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -696,7 +692,7 @@ const TambahStok = () => {
                                 type='number'
                                 value={inputField.subtotal}
                                 onChange={event => handleChangeInput(inputField.kodeBarang, event)}
-                                style={{ fontFamily: "initial", fontSize: 20, width: 130, maxWidth: 130, color: "black", borderColor: "grey" }}
+                                style={{ fontSize: 15, width: 130, maxWidth: 130, color: "black", borderColor: "grey" }}
                               />
                             </td>
                             <td className="border-0 fw-bold">
@@ -713,25 +709,25 @@ const TambahStok = () => {
                       </tfoot>
                     </table>
                     <Row>
-                      <Col md={2} className="mb-4 mt-2">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}></h3>
+                      <Col md={2} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}></h3>
                       </Col>
-                      <Col md={2} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}>Total Item</h3>
+                      <Col md={2} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}>Total Item</h3>
                       </Col>
-                      <Col md={2} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}>{totalqty}</h3>
+                      <Col md={2} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}>{totalqty}</h3>
                       </Col>
-                      <Col md={3} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}>Grand Total</h3>
+                      <Col md={3} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}>Grand Total</h3>
                       </Col>
-                      <Col md={3} className="mb-4 mt-5">
-                        <h3 className="" style={{ color: 'black', fontFamily: 'initial', fontSize: 30, fontWeight: 'bold' }}> {currencyFormat(String(total))}</h3>
+                      <Col md={3} className="mb-2 mt-3">
+                        <h3 className="" style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}> {currencyFormat(String(total))}</h3>
                       </Col>
                     </Row>
                   </div>
                 </div>
-                <Col md={5} className="mb-1 mt-5">
+                <Col md={5} className="mb-1">
                   <span className="p-buttonset">
                     <Button label="Save" type="submit" icon="mdi mdi-content-save" className="px-4" severity="info" />
                     <Button label="Cancel" type="button" onClick={refresh} icon="mdi mdi-close-circle" severity="danger" />

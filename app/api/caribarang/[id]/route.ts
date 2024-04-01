@@ -7,11 +7,10 @@ export const GET = async (request: Request, { params }: { params: { id: string }
 
     const caribarang = await prisma.barangTb.findMany({
         where: {
-       
-                    namaBarang: {
-                        contains: params.id,
-                    },
-           
+            namaBarang: {
+                contains: params.id,
+                mode:'insensitive'
+            },
         }
     })
     return NextResponse.json(caribarang, { status: 200 })

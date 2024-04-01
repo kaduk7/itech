@@ -4,6 +4,7 @@ import axios from "axios"
 import Modal from 'react-bootstrap/Modal';
 import Swal from "sweetalert2";
 import Select from 'react-select'
+import { tanggalHariIni } from "@/app/helper";
 
 const options = [
     { value: 'Admin', label: 'Admin' },
@@ -13,7 +14,7 @@ const options = [
 function Add({ reload }: { reload: Function }) {
     const [nama, setNama] = useState("")
     const [tempatLahir, setTempatlahir] = useState("")
-    const [tanggalLahir, setTanggallahir] = useState("")
+    const [tanggalLahir, setTanggallahir] = useState(tanggalHariIni)
     const [alamat, setAlamat] = useState("")
     const [hp, setHp] = useState("")
     const [password, setPassword] = useState("")

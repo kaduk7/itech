@@ -44,7 +44,7 @@ export default function MenuAdmin() {
                             <li>
                                 <Link href="/admin/karyawan">Karyawan</Link>
                             </li>
-                          
+
                         </ul>
                     </li>
 
@@ -52,11 +52,12 @@ export default function MenuAdmin() {
                     <li>
                         <Link href="/admin/tambahstok" className="" aria-expanded="false">
                             <div className="menu-icon">
-                                <svg width={25} height={24} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.6209 16.593H4.32019" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M13.4313 6.90066H19.732" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M9.01706 6.84625C9.01706 5.5506 7.9589 4.5 6.65392 4.5C5.34893 4.5 4.29077 5.5506 4.29077 6.84625C4.29077 8.14191 5.34893 9.19251 6.65392 9.19251C7.9589 9.19251 9.01706 8.14191 9.01706 6.84625Z" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M20.2907 16.5533C20.2907 15.2576 19.2334 14.207 17.9284 14.207C16.6226 14.207 15.5645 15.2576 15.5645 16.5533C15.5645 17.8489 16.6226 18.8995 17.9284 18.8995C19.2334 18.8995 20.2907 17.8489 20.2907 16.5533Z" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <svg
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    width={25} height={24}
+                                >
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                                 </svg>
                             </div>
                             <span className="nav-text">Tambah Stok</span>
@@ -66,9 +67,12 @@ export default function MenuAdmin() {
                     <li>
                         <Link href="/kasir/transaksi" className="" aria-expanded="false">
                             <div className="menu-icon">
-                                <svg width={25} height={24} viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M18.148 20.417C20.021 20.417 21.54 18.899 21.541 17.026V17.024V14.324C20.304 14.324 19.302 13.322 19.301 12.085C19.301 10.849 20.303 9.846 21.54 9.846H21.541V7.146C21.543 5.272 20.026 3.752 18.153 3.75H18.147H6.43502C4.56102 3.75 3.04202 5.268 3.04102 7.142V7.143V9.933C4.23502 9.891 5.23602 10.825 5.27802 12.019C5.27902 12.041 5.28002 12.063 5.28002 12.085C5.28102 13.32 4.28202 14.322 3.04702 14.324H3.04102V17.024C3.04002 18.897 4.55902 20.417 6.43202 20.417H6.43302H18.148Z" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M12.6621 9.06303L13.2781 10.31C13.3381 10.432 13.4541 10.517 13.5891 10.537L14.9661 10.738C15.3071 10.788 15.4421 11.206 15.1961 11.445L14.2001 12.415C14.1021 12.51 14.0581 12.647 14.0801 12.782L14.3151 14.152C14.3731 14.491 14.0181 14.749 13.7141 14.589L12.4831 13.942C12.3621 13.878 12.2181 13.878 12.0971 13.942L10.8671 14.589C10.5621 14.749 10.2071 14.491 10.2651 14.152L10.5001 12.782C10.5231 12.647 10.4781 12.51 10.3801 12.415L9.38511 11.445C9.13911 11.206 9.27411 10.788 9.61411 10.738L10.9911 10.537C11.1261 10.517 11.2431 10.432 11.3031 10.31L11.9181 9.06303C12.0701 8.75503 12.5101 8.75503 12.6621 9.06303Z" stroke="#252525" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <svg
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    width={25} height={24}
+                                >
+                                    <path d="M10 20a10 10 0 110-20 10 10 0 010 20zm1-5h1a3 3 0 000-6H7.99a1 1 0 010-2H14V5h-3V3H9v2H8a3 3 0 100 6h4a1 1 0 110 2H6v2h3v2h2v-2z" />
                                 </svg>
                             </div>
                             <span className="nav-text">Kasir</span>
@@ -97,7 +101,7 @@ export default function MenuAdmin() {
                             </li>
                         </ul>
                     </li>
-                   
+
                 </ul>
                 <div className="switch-btn">
                     <Link href="">
@@ -123,7 +127,7 @@ export default function MenuAdmin() {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span><Buttonlogout/></span>
+                        <span><Buttonlogout /></span>
                     </Link>
                 </div>
             </div>
