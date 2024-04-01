@@ -6,38 +6,68 @@ const prisma = new PrismaClient()
 export const POST = async (request: Request) => {
     const formData = await request.formData()
 
-    const tambahstok = await prisma.tambahstokTb.createMany({
-        data: [{
+    const tambahstok = await prisma.tambahstokTb.create({
+        data: {
             nofaktur: String(formData.get('nofaktur')),
             tanggal: String(formData.get('tanggal')),
             admin: String(formData.get('admin')),
             totalItem: Number(formData.get('totalItem')),
             totalBayar: Number(formData.get('totalBayar')),
-        }],
-        skipDuplicates: true,
+        },
     })
-    const detailtambahstok = await prisma.detailtambahstokTb.createMany({
-        data: {
-            barangId: Number(formData.get('barangId')),
+    // const tambahstok = await prisma.tambahstokTb.createMany({
+    //     data: [{
+    //         nofaktur: String(formData.get('nofaktur')),
+    //         tanggal: String(formData.get('tanggal')),
+    //         admin: String(formData.get('admin')),
+    //         totalItem: Number(formData.get('totalItem')),
+    //         totalBayar: Number(formData.get('totalBayar')),
+    //     }],
+    //     skipDuplicates: true,
+    // })
+
+    // const detailtambahstok = await prisma.detailtambahstokTb.createMany({
+    //     data: {
+    //         barangId: Number(formData.get('barangId')),
+    //         nofakturId: String(formData.get('nofaktur')),
+    //         hargaModal: Number(formData.get('hargaModal')),
+    //         hargaJual: Number(formData.get('hargaJual')),
+    //         qty: Number(formData.get('qty')),
+    //     },
+    // })
+
+    const pilihbarang = JSON.parse(String(formData.get('selected'))) as any[];
+
+    var x = [];
+    for (let i = 0; i < pilihbarang.length; i++) {
+        x.push({
+            barangId: pilihbarang[i].id,
             nofakturId: String(formData.get('nofaktur')),
-            hargaModal: Number(formData.get('hargaModal')),
-            hargaJual: Number(formData.get('hargaJual')),
-            qty: Number(formData.get('qty')),
+            hargaModal: Number(pilihbarang[i].hargaModal),
+            hargaJual: Number(pilihbarang[i].hargaJual),
+            qty: Number(pilihbarang[i].qty),
+        });
+    }
 
-        },
+     await prisma.detailtambahstokTb.createMany({
+        data: x
     })
 
-    const updatebarang = await prisma.barangTb.updateMany({
-        where: {
-            id: Number(formData.get('barangId'))
-        },
-        data: {
-            stok: Number(formData.get('stokakhir')),
-            hargaModal: Number(formData.get('hargaModal')),
-            hargaJual: Number(formData.get('hargaJual')),
-        },
-    })
-    return NextResponse.json([tambahstok, detailtambahstok, updatebarang], { status: 201 })
+    for (let i = 0; i < pilihbarang.length; i++) {
+        await prisma.barangTb.update({
+            where: {
+                id: pilihbarang[i].id
+            },
+            data: {
+                stok: Number(pilihbarang[i].stokakhir),
+                hargaModal: Number(pilihbarang[i].hargaModal),
+                hargaJual: Number(pilihbarang[i].hargaJual),
+            },
+        })
+    }
+
+
+    return NextResponse.json(tambahstok, { status: 201 })
 }
 
 export const GET = async () => {

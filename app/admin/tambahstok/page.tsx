@@ -7,40 +7,16 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation"
 import AsyncSelect from 'react-select/async';
 import Modal from "react-bootstrap/esm/Modal";
-import { Editor } from '@tinymce/tinymce-react';
 import Select from 'react-select'
-
+import { Editor } from '@tinymce/tinymce-react';
 import { Button as Button1 } from 'antd';
 import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Col, Row } from "@themesberg/react-bootstrap";
+import { StyleSelect } from "@/app/helper";
 
-const loadOptions = (inputValue: any, callback: any) => {
-  setTimeout(async () => {
-    if (inputValue.length < 2) {
-      callback([]);
-      return;
-    }
-    try {
-      const response = await axios.get(`/api/caribarang/${inputValue}`);
-      const data = response.data;
-      const options = data.map((item: any) => ({
-        value: item.id,
-        label: item.namaBarang,
-        kodeBarang: item.kodeBarang,
-        namaBarang: item.namaBarang,
-        hargaModal: item.hargaModal,
-        hargaJual: item.hargaJual,
-        stok: item.stok,
-      }));
-      callback(options);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      callback([]);
-    }
-  }, 300);
-};
+
 
 
 const TambahStok = () => {
@@ -70,9 +46,36 @@ const TambahStok = () => {
   const myRef = useRef<HTMLInputElement>(null);
   const refqty = useRef<HTMLInputElement>(null);
 
+  let loadOptions = (inputValue: any, callback: any) => {
+    setTimeout(async () => {
+      if (inputValue.length < 2) {
+        callback([]);
+        return;
+      }
+      try {
+        const response = await axios.get(`/api/caribarang/${inputValue}`);
+        const data = response.data;
+        const options = data.map((item: any) => ({
+          value: item.id,
+          label: item.namaBarang,
+          kodeBarang: item.kodeBarang,
+          namaBarang: item.namaBarang,
+          hargaModal: item.hargaModal,
+          hargaJual: item.hargaJual,
+          stok: item.stok,
+        }));
+        callback(options);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        callback([]);
+      }
+    }, 300);
+  };
+
   const router = useRouter()
 
   const [show, setShow] = useState(false);
+
   const handleClose = () => {
     setShow(false);
     clearForm();
@@ -239,19 +242,19 @@ const TambahStok = () => {
       return;
     }
 
-    inputFields.forEach(async (item: any) => {
+    // inputFields.forEach(async (item: any) => {
       const formData = new FormData()
       formData.append('tanggal', new Date(tanggal).toISOString())
       formData.append('totalItem', String(totalqty))
       formData.append('totalBayar', String(total))
       formData.append('nofaktur', nofaktur)
       formData.append('admin', admin)
-
-      formData.append('barangId', item.id)
-      formData.append('hargaModal', item.hargaModal)
-      formData.append('hargaJual', item.hargaJual)
-      formData.append('qty', item.qty)
-      formData.append('stokakhir', item.stokakhir)
+      formData.append('selected', JSON.stringify(inputFields))
+      // formData.append('barangId', item.id)
+      // formData.append('hargaModal', item.hargaModal)
+      // formData.append('hargaJual', item.hargaJual)
+      // formData.append('qty', item.qty)
+      // formData.append('stokakhir', item.stokakhir)
 
       await axios.post(`/api/tambahstok`, formData, {
         headers: {
@@ -264,10 +267,10 @@ const TambahStok = () => {
       })
       setTimeout(function () {
         refresh();
-
         router.refresh()
+        loadOptions
       }, 1500);
-    })
+    // })
 
   };
 
@@ -540,7 +543,7 @@ const TambahStok = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title" style={{ fontFamily: "monospace", fontSize: 35, marginBottom: 10 }}>Tambah Stok</h1>
+              <h1 className="card-title" style={{ fontFamily: "initial", fontSize: 30, marginBottom: 10 }}>Tambah Stok</h1>
             </div>
             <div className="card-body">
               <form className="" onSubmit={handleSubmit}>
@@ -566,7 +569,7 @@ const TambahStok = () => {
                         required
                         type="date"
                         className="form-control"
-                        style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 17, color: "black", borderColor: "grey" }}
+                        style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                         value={tanggal} onChange={(e) => setTanggal(e.target.value)}
                       />
                     </div>
@@ -601,20 +604,7 @@ const TambahStok = () => {
                         onChange={handlechange}
                         value={selected}
 
-                        styles={{
-                          control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? 'blue' : 'grey',
-                            fontSize: state.isFocused ? 20 : 20,
-                            fontFamily: "initial",
-                          }),
-                          option: (baseStyles, state) => ({
-                            ...baseStyles,
-                            fontSize: 20,
-                            color: "black",
-                            fontFamily: "initial",
-                          }),
-                        }}
+                        styles={StyleSelect}
                       />
                     </div>
                   </div>
@@ -753,22 +743,22 @@ const TambahStok = () => {
         </div>
       </div>
       <Modal
-        dialogClassName="modal-xl"
+        dialogClassName="modal-lg"
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}>
         <form onSubmit={handleSubmitbarang}>
           <Modal.Header closeButton>
-            <Modal.Title style={{ fontFamily: "monospace", fontSize: 30, color: "black" }}>Tambah Data Barang</Modal.Title>
+            <Modal.Title style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Tambah Data Barang</Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Kode Barang</label>
-              <div className="col-sm-9" >
+            <div className="row">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kode Barang</label>
                 <input
-                  ref={myRef}
+                  autoFocus
                   required
                   type="text"
                   className="form-control"
@@ -776,11 +766,8 @@ const TambahStok = () => {
                   value={kodeBarang} onChange={(e) => setKodebarang(e.target.value)}
                 />
               </div>
-            </div>
-
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Nama Barang</label>
-              <div className="col-sm-9">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Nama Barang</label>
                 <input
                   required
                   type="text"
@@ -791,39 +778,20 @@ const TambahStok = () => {
               </div>
             </div>
 
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Kategori</label>
-
-              <div className="col-sm-9">
+            <div className="row">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kategori</label>
                 <Select
                   required
                   placeholder="Search..."
                   options={datakategori}
-                  onChange={handlechangekategori}
-                  value={selectedkategori}
-
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      borderColor: state.isFocused ? 'blue' : 'grey',
-                      fontSize: state.isFocused ? 20 : 20,
-                      fontFamily: "initial",
-                    }),
-                    option: (baseStyles, state) => ({
-                      ...baseStyles,
-                      fontSize: 20,
-                      color: "black",
-                      fontFamily: "initial",
-                    }),
-                  }}
+                  onChange={handlechange}
+                  value={selected}
+                  styles={StyleSelect}
                 />
               </div>
-
-            </div>
-
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Merek</label>
-              <div className="col-sm-9">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Merek</label>
                 <input
                   required
                   type="text"
@@ -834,9 +802,9 @@ const TambahStok = () => {
               </div>
             </div>
 
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Unit</label>
-              <div className="col-sm-9">
+            <div className="row">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Unit</label>
                 <input
                   required
                   type="text"
@@ -845,11 +813,23 @@ const TambahStok = () => {
                   value={unit} onChange={(e) => setUnit(e.target.value)}
                 />
               </div>
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Stok</label>
+                <input
+                  required
+                  type="number"
+                  className="form-control"
+                  style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
+                  value={stok}
+                  onChange={handlechangestok}
+                  min='1'
+                />
+              </div>
             </div>
 
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Harga Modal</label>
-              <div className="col-sm-9">
+            <div className="row">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Harga Modal</label>
                 <input
                   required
                   type="number"
@@ -860,11 +840,8 @@ const TambahStok = () => {
                   min='1'
                 />
               </div>
-            </div>
-
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Harga Jual</label>
-              <div className="col-sm-9">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Harga Jual</label>
                 <input
                   required
                   type="number"
@@ -877,43 +854,28 @@ const TambahStok = () => {
               </div>
             </div>
 
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Stok</label>
-              <div className="col-sm-9">
+            <div className="row">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Foto</label>
                 <input
-                  required
-                  disabled={true}
-                  type="number"
-                  className="form-control"
-                  style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
-                  value={stok}
-                  onChange={handlechangestok}
-                />
-              </div>
-            </div>
-            {/* <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Foto</label>
-              <div className="col-sm-1">
-                <label className="input-group-text" htmlFor="inputGroupFile01">Upload</label>
-                <input
-                  hidden
                   type="file"
                   id="inputGroupFile01"
                   name="file"
                   className="form-control"
                   onChange={(e) => setFile(e.target.files?.[0])}
+                  style={{ backgroundColor: 'white', color: "black", borderColor: "grey" }}
                 />
               </div>
-            </div>
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label"></label>
-              <div className="col-sm-9">
+              <div className="mb-3 col-md-6">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}></label>
                 {file ? <img src={preview} width={300} style={{ maxWidth: 300, maxHeight: 200 }} className="img-fluid " alt="Responsive image" /> : null}
               </div>
             </div>
-            <div className="mb-3 row">
-              <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 20, fontWeight: 'bold', color: "black" }}>Deskripsi</label>
-              <div className="col-sm-9">
+
+
+            <div className="row">
+              <div className="mb-3 col-md-12">
+                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Deskripsi</label>
                 <Editor
                   value={deskripsi}
                   initialValue=""
@@ -935,7 +897,7 @@ const TambahStok = () => {
                   onEditorChange={handleEditorChange}
                 />
               </div>
-            </div> */}
+            </div>
 
           </Modal.Body>
           <Modal.Footer>
