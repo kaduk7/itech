@@ -6,7 +6,6 @@ export default async function Home() {
   return (
     <main>
       <h2 style={{ color: 'black' }}>Dashboard</h2>
-      <pre>{JSON.stringify(session)}</pre>
     </main>
 
   )

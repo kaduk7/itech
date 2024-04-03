@@ -38,7 +38,7 @@ model BarangTb {
 
   KategoriTb         KategoriTb           @relation(fields: [kategoriId], references: [id], onDelete: Cascade)
   DetailtambahstokTb DetailtambahstokTb[]
-  DetailJualTb       DetailJualTb[]
+  detailTransaksiTb  DetailTransaksiTb[]
 }
 
 model KategoriTb {
@@ -52,7 +52,6 @@ model KategoriTb {
 
 model TambahstokTb {
   id         Int      @id @default(autoincrement())
-  nofaktur   String   @unique
   tanggal    DateTime
   admin      String
   totalItem  Int
@@ -64,45 +63,45 @@ model TambahstokTb {
 }
 
 model DetailtambahstokTb {
-  id         Int      @id @default(autoincrement())
-  barangId   Int
-  nofakturId String
-  hargaModal Int
-  hargaJual  Int
-  qty        Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  barangId     Int
+  tambahstokId Int
+  hargaModal   Int
+  hargaJual    Int
+  qty          Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   BarangTb     BarangTb     @relation(fields: [barangId], references: [id], onDelete: Cascade)
-  TambahstokTb TambahstokTb @relation(fields: [nofakturId], references: [nofaktur], onDelete: Cascade)
+  TambahstokTb TambahstokTb @relation(fields: [tambahstokId], references: [id], onDelete: Cascade)
 }
 
 model TransaksiTB {
   id         Int      @id @default(autoincrement())
   nofaktur   String   @unique
-  tanggal    DateTime @default(now())
+  tanggal    DateTime
   kasir      String
   totalItem  Int
   totalBayar Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  DetailJualTb DetailJualTb[]
+  detailTransaksiTb DetailTransaksiTb[]
 }
 
-model DetailJualTb {
-  id         Int      @id @default(autoincrement())
-  barangId   Int
-  nofakturId String
-  hargaModal Int
-  hargaJual  Int
-  qty        Int
-  tanggal    DateTime @default(now())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model DetailTransaksiTb {
+  id          Int      @id @default(autoincrement())
+  barangId    Int
+  transaksiId Int
+  hargaModal  Int
+  hargaJual   Int
+  qty         Int
+  tanggal     DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   BarangTb    BarangTb    @relation(fields: [barangId], references: [id], onDelete: Cascade)
-  TransaksiTB TransaksiTB @relation(fields: [nofakturId], references: [nofaktur], onDelete: Cascade)
+  TransaksiTB TransaksiTB @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
 }
 
 model KaryawanTb {

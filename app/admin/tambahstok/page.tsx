@@ -14,19 +14,21 @@ import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Col, Row } from "@themesberg/react-bootstrap";
-import { StyleSelect,tanggalHariIni } from "@/app/helper";
+import { StyleSelect, tanggalHariIni } from "@/app/helper";
+import { useSession } from "next-auth/react";
 
 const TambahStok = () => {
+  const session = useSession()
+  const admin = session.data?.nama
   const [selected, setSelected] = useState(null)
   const [inputFields, setInputFields] = useState([]);
-  const [nofaktur, setNofaktur] = useState('');
   const [barcode, setBarcode] = useState('');
   const [tanggal, setTanggal] = useState(tanggalHariIni);
   const [total, setTotal] = useState(0);
   const [totalqty, setTotalqty] = useState(0);
-  const [admin, setAdmin] = useState("");
   const ref = useRef<HTMLInputElement>(null);
 
+  const [databarang, setDatabarang] = useState([])
   const [datakategori, setDatakategori] = useState([])
   const [kodeBarang, setKodebarang] = useState("")
   const [namaBarang, setNamabarang] = useState("")
@@ -35,7 +37,7 @@ const TambahStok = () => {
   const [unit, setUnit] = useState("")
   const [hargaModal, setHargamodal] = useState("")
   const [hargaJual, setHargaJual] = useState("")
-  const [stok, setStok] = useState("0")
+  const [stok, setStok] = useState("")
   const [deskripsi, setDeskripsi] = useState("")
   const [file, setFile] = useState<File | null>()
   const [preview, setPreview] = useState('')
@@ -49,30 +51,24 @@ const TambahStok = () => {
         callback([]);
         return;
       }
-      try {
-        const response = await axios.get(`/api/caribarang/${inputValue}`);
-        const data = response.data;
-        const options = data.map((item: any) => ({
-          value: item.id,
-          label: item.namaBarang,
-          kodeBarang: item.kodeBarang,
-          namaBarang: item.namaBarang,
-          hargaModal: item.hargaModal,
-          hargaJual: item.hargaJual,
-          stok: item.stok,
-        }));
-        callback(options);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        callback([]);
-      }
+      const data = databarang.filter(
+        (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(inputValue.toLowerCase()),
+      );
+      const options = data.map((item: any) => ({
+        value: item.id,
+        label: item.namaBarang,
+        kodeBarang: item.kodeBarang,
+        namaBarang: item.namaBarang,
+        hargaModal: item.hargaModal,
+        hargaJual: item.hargaJual,
+        stok: item.stok,
+      }));
+      callback(options);
     }, 300);
   };
 
   const router = useRouter()
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => {
     setShow(false);
     clearForm();
@@ -82,16 +78,14 @@ const TambahStok = () => {
 
   }
   const handleShow = () => setShow(true);
-
   const setbarcode = () => {
     ref.current?.focus();
   }
 
   useEffect(() => {
-    otomatisnofaktur()
-    ambiltoken()
     ref.current?.focus();
     getkategori()
+    getbarang()
   }, [])
 
   async function getkategori() {
@@ -101,26 +95,24 @@ const TambahStok = () => {
     setDatakategori(options);
   }
 
-  async function ambiltoken() {
-    const response = await axios.get(`/api/token`);
+  async function getbarang() {
+    const response = await axios.get(`/api/barang`);
     const data = response.data;
-    setAdmin(data.nama)
-  }
-
-  async function otomatisnofaktur() {
-    const response = await axios.get(`/api/tambahstok`);
-    const data = response.data;
-    setNofaktur(data)
+    setDatabarang(data);
   }
 
   const refresh = () => {
     setInputFields([])
     setSelected(null)
-    setTanggal('')
+    setTanggal(tanggalHariIni)
     setTotal(0)
     setTotalqty(0)
-    otomatisnofaktur()
     ref.current?.focus()
+  }
+
+  const handlekategori = (value: any) => {
+    setKategoriId(value.value);
+    setSelected(value)
   }
 
   const handlechange = (selected: any) => {
@@ -239,36 +231,27 @@ const TambahStok = () => {
       return;
     }
 
-    // inputFields.forEach(async (item: any) => {
     const formData = new FormData()
     formData.append('tanggal', new Date(tanggal).toISOString())
     formData.append('totalItem', String(totalqty))
     formData.append('totalBayar', String(total))
-    formData.append('nofaktur', nofaktur)
-    formData.append('admin', admin)
+    formData.append('admin', String(admin))
     formData.append('selected', JSON.stringify(inputFields))
-    // formData.append('barangId', item.id)
-    // formData.append('hargaModal', item.hargaModal)
-    // formData.append('hargaJual', item.hargaJual)
-    // formData.append('qty', item.qty)
-    // formData.append('stokakhir', item.stokakhir)
 
     await axios.post(`/api/tambahstok`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-    Toast.fire({
+    Swal.fire({
+      position: 'top-end',
       icon: 'success',
-      title: 'Berhasil disimpan'
+      title: 'Berhasil simpan',
+      showConfirmButton: false,
+      timer: 1500
     })
-    setTimeout(function () {
-      refresh();
-      router.refresh()
-      loadOptions
-    }, 1500);
-    // })
-
+    refresh();
+    getbarang()
   };
 
   const scanbarcode = async (e: any) => {
@@ -277,9 +260,8 @@ const TambahStok = () => {
       if (barcode == "") {
         return
       }
-      const response = await axios.get(`/api/barang/${barcode}`);
-      const xxx = response.data
-      if (xxx === null) {
+      const xxx: any = databarang.find((item: any) => item.kodeBarang.toLowerCase() === (barcode.toLowerCase()))
+      if (xxx === undefined) {
         Swal.fire({
           title: 'Data Tidak Ada',
           text: "Tambah Data Baru!",
@@ -292,17 +274,13 @@ const TambahStok = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             handleShow()
-            setTimeout(function () {
-              setfokuskodebarang()
-            }, 500);
+            setKodebarang(barcode)
           }
         })
-
         setBarcode("")
         return
       } else {
         const a = inputFields.findIndex((element: any) => element.kodeBarang == xxx.kodeBarang);
-
         let x = []
         if (a > -1) {
           const data: any = [...inputFields]
@@ -498,9 +476,7 @@ const TambahStok = () => {
           showConfirmButton: false,
           timer: 1500
         })
-        setTimeout(function () {
-          router.refresh()
-        }, 1500);
+        getbarang()
       }
     } catch (error) {
       console.error('Error:', error);
@@ -546,20 +522,6 @@ const TambahStok = () => {
               <form className="" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <div className="mb-3 row">
-                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>No Faktur</label>
-                    <div className="col-sm-2">
-                      <input
-                        disabled={true}
-                        required
-                        type="text"
-                        className="form-control"
-                        style={{ fontSize: 15, color: "black", borderColor: "grey" }}
-                        value={nofaktur} onChange={(e) => setNofaktur(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="col-sm-3"></div>
-
                     <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Tanggal</label>
                     <div className="col-sm-2">
                       <input
@@ -754,8 +716,8 @@ const TambahStok = () => {
               <div className="mb-3 col-md-6">
                 <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kode Barang</label>
                 <input
-                  autoFocus
                   required
+                  disabled
                   type="text"
                   className="form-control"
                   style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
@@ -765,6 +727,7 @@ const TambahStok = () => {
               <div className="mb-3 col-md-6">
                 <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Nama Barang</label>
                 <input
+                  autoFocus
                   required
                   type="text"
                   className="form-control"
@@ -781,7 +744,7 @@ const TambahStok = () => {
                   required
                   placeholder="Search..."
                   options={datakategori}
-                  onChange={handlechange}
+                  onChange={handlekategori}
                   value={selected}
                   styles={StyleSelect}
                 />
@@ -874,7 +837,6 @@ const TambahStok = () => {
                 <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Deskripsi</label>
                 <Editor
                   value={deskripsi}
-                  initialValue=""
                   init={{
                     height: 500,
                     menubar: true,

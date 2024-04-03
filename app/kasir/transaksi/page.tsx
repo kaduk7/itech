@@ -13,51 +13,27 @@ import { Button as Button1 } from 'antd';
 import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-
-const loadOptions = (inputValue: any, callback: any) => {
-  setTimeout(async () => {
-    if (inputValue.length < 2) {
-      callback([]);
-      return;
-    }
-    try {
-      const response = await axios.get(`/api/caribarang/${inputValue}`);
-      const data = response.data;
-      const options = data.map((item: any) => ({
-        value: item.id,
-        label: item.namaBarang,
-        kodeBarang: item.kodeBarang,
-        namaBarang: item.namaBarang,
-        hargaModal: item.hargaModal,
-        hargaJual: item.hargaJual,
-        stok: item.stok,
-      }));
-      callback(options);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      callback([]);
-    }
-  }, 300);
-};
+import { useSession } from "next-auth/react";
+import { tanggalHariIni } from "@/app/helper";
 
 const Kasir = () => {
+  const session = useSession()
+  const kasir = session.data?.nama
   const [selected, setSelected] = useState(null)
   const [inputFields, setInputFields] = useState([]);
   const [nofaktur, setNofaktur] = useState('');
+  const [tanggal, setTanggal] = useState(tanggalHariIni);
   const [barcode, setBarcode] = useState('');
   const [total, setTotal] = useState(0);
   const [totalqty, setTotalqty] = useState(0);
-  const [kasir, setKasir] = useState("");
   const [kembalian, setKembalian] = useState(0);
   const [uang, setUang] = useState("");
+  const [databarang, setDatabarang] = useState([])
   const [totalbayar, setTotalbayar] = useState(0);
 
   const ref = useRef<HTMLInputElement>(null);
   const refuang = useRef<HTMLInputElement>(null);
   const refqty = useRef<HTMLInputElement>(null);
-
-  const router = useRouter()
-
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
@@ -70,21 +46,43 @@ const Kasir = () => {
 
   useEffect(() => {
     otomatisnofaktur()
-    ambiltoken()
     ref.current?.focus();
+    getbarang()
   }, [])
-
-  async function ambiltoken() {
-    const response = await axios.get(`/api/token`);
-    const data = response.data;
-    setKasir(data.nama)
-  }
 
   async function otomatisnofaktur() {
     const response = await axios.get(`/api/kasir`);
     const data = response.data;
     setNofaktur(data)
   }
+
+  async function getbarang() {
+    const response = await axios.get(`/api/barang`);
+    const data = response.data;
+    setDatabarang(data);
+  }
+
+  let loadOptions = (inputValue: any, callback: any) => {
+    setTimeout(async () => {
+      if (inputValue.length < 2) {
+        callback([]);
+        return;
+      }
+      const data = databarang.filter(
+        (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(inputValue.toLowerCase()),
+      );
+      const options = data.map((item: any) => ({
+        value: item.id,
+        label: item.namaBarang,
+        kodeBarang: item.kodeBarang,
+        namaBarang: item.namaBarang,
+        hargaModal: item.hargaModal,
+        hargaJual: item.hargaJual,
+        stok: item.stok,
+      }));
+      callback(options);
+    }, 300);
+  };
 
   const refresh = () => {
     setInputFields([])
@@ -108,7 +106,8 @@ const Kasir = () => {
         position: 'top-end',
         icon: 'warning',
         title: 'Stok Kosong',
-        showConfirmButton: true,
+        showConfirmButton: false,
+        timer: 1500
       })
       setBarcode("")
       setSelected(null)
@@ -152,6 +151,7 @@ const Kasir = () => {
       setTotalqty(totalqty)
       setTotalbayar(totalbayar)
       setSelected(null)
+      setBarcode("")
       ref.current?.focus();
     }
   }
@@ -179,9 +179,6 @@ const Kasir = () => {
     const newInputFields: any = inputFields.map((i: any) => {
       if (kodeBarang === i.kodeBarang) {
         let xxx = event.target.value
-        // if (/^0/.test(xxx)) {
-        //   xxx = xxx.slice(1);
-        // }
         if (parseInt(xxx) <= 0) {
           xxx = '';
         }
@@ -219,10 +216,13 @@ const Kasir = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (total === 0) {
-      Toast.fire({
+      Swal.fire({
+        position: 'top-end',
         icon: 'warning',
-        title: 'Belum ada data'
-      });
+        title: 'Belum Ada Data',
+        showConfirmButton: false,
+        timer: 2000
+      })
       ref.current?.focus();
       return;
     }
@@ -257,9 +257,6 @@ const Kasir = () => {
   const kalkulasi = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      // if (uang===""){
-      //   return
-      // }
       if (Number(uang) < total) {
         return
       }
@@ -306,15 +303,14 @@ const Kasir = () => {
         return handleSubmit(e)
       }
 
-      const response = await axios.get(`/api/barang/${barcode}`);
-      const xxx = response.data
-      if (xxx === null) {
+      const xxx: any = databarang.find((item: any) => item.kodeBarang.toLowerCase() === (barcode.toLowerCase()))
+      if (xxx === undefined) {
         Swal.fire({
-          position: 'center',
+          position: 'top-end',
           icon: 'error',
           title: 'Data Barang Tidak Ada',
           showConfirmButton: false,
-          timer: 2000
+          timer: 1500
         })
 
         setBarcode("")
@@ -325,7 +321,8 @@ const Kasir = () => {
             position: 'top-end',
             icon: 'warning',
             title: 'Stok Kosong',
-            showConfirmButton: true,
+            showConfirmButton: false,
+            timer: 1500
           })
           setBarcode("")
           return
@@ -378,38 +375,31 @@ const Kasir = () => {
     return value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
   };
 
-  const selesai = () => {
+  const selesai = async () => {
     handleClose()
-    inputFields.forEach(async (item: any) => {
-      const formData = new FormData()
-      formData.append('totalItem', String(totalqty))
-      formData.append('totalBayar', String(total))
-      formData.append('nofaktur', nofaktur)
-      formData.append('kasir', kasir)
+    const formData = new FormData()
+    formData.append('totalItem', String(totalqty))
+    formData.append('totalBayar', String(total))
+    formData.append('nofaktur', nofaktur)
+    formData.append('tanggal', new Date(tanggal).toISOString())
+    formData.append('kasir', String(kasir))
+    formData.append('selected', JSON.stringify(inputFields))
 
-      formData.append('barangId', item.id)
-      formData.append('hargaModal', item.hargaModal)
-      formData.append('hargaJual', item.hargaJual)
-      formData.append('qty', item.qty)
-      formData.append('stokakhir', item.stokakhir)
-
-      await axios.post(`/api/kasir`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Berhasil simpan',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      setTimeout(function () {
-        refresh();
-        refresh2();
-      }, 400);
+    await axios.post(`/api/kasir`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Berhasil simpan',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    refresh();
+    refresh2();
+    getbarang()
   }
 
   const handleUang = (e: any) => {
@@ -433,7 +423,7 @@ const Kasir = () => {
                 <div className="form-group">
                   <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>No Faktur</label>
-                    <div className="col-sm-2">
+                    <div className="col-sm-3">
                       <input
                         disabled={true}
                         required
@@ -446,6 +436,17 @@ const Kasir = () => {
 
                     <div className="col-sm-1"></div>
 
+                    <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Tanggal</label>
+                    <div className="col-sm-2">
+                      <input
+                        disabled
+                        required
+                        type="date"
+                        className="form-control"
+                        style={{ fontSize: 15, color: "black", borderColor: "grey" }}
+                        value={tanggal} onChange={(e) => setTanggal(e.target.value)}
+                      />
+                    </div>
                   </div>
 
                   <div className="mb-3 row">
@@ -464,7 +465,7 @@ const Kasir = () => {
                       </div>
                     </div>
 
-                    <div className="col-sm-2"></div>
+                    <div className="col-sm-1"></div>
 
                     <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Nama Barang</label>
                     <div className="col-sm-3">
@@ -612,66 +613,62 @@ const Kasir = () => {
       </div>
 
       <Modal
-        dialogClassName="modal-xl"
+        dialogClassName="modal-lg"
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}>
         <form onSubmit={selesai}>
           <Modal.Header closeButton>
-            <Modal.Title style={{ fontFamily: "monospace", fontSize: 30, color: "black" }}>Detail Belanja</Modal.Title>
+            <Modal.Title style={{ fontSize: 20, color: "black" }}>Detail Belanja</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="table-responsive">
               <table className="table ">
                 <thead className="thead-success">
                   <tr>
-                    <th style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>No</th>
-                    <th style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Nama Barang</th>
-                    <th style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Harga</th>
-                    <th style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Qty</th>
-                    <th style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Sub Total</th>
+                    <th style={{ fontSize: 20, color: "black" }}>No</th>
+                    <th style={{ fontSize: 20, color: "black" }}>Nama Barang</th>
+                    <th style={{ fontSize: 20, color: "black" }}>Harga</th>
+                    <th style={{ fontSize: 20, color: "black" }}>Qty</th>
+                    <th style={{ fontSize: 20, color: "black" }}>Sub Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   {inputFields.map((x: any, index) => (
                     <tr className="hover" key={x.id}>
-                      <td style={{ fontFamily: "initial", fontSize: 20, color: "black" }}>{index + 1}</td>
-                      <td style={{ fontFamily: "initial", fontSize: 20, color: "black" }}>{x.namaBarang}</td>
-                      <td style={{ fontFamily: "initial", fontSize: 20, color: "black" }}> {x.hargaJual}</td>
-                      <td style={{ fontFamily: "initial", fontSize: 20, color: "black" }}>{x.qty}</td>
-                      <td style={{ fontFamily: "initial", fontSize: 20, color: "black" }}>{x.subtotal}</td>
+                      <td style={{ fontSize: 18, color: "black" }}>{index + 1}</td>
+                      <td style={{ fontSize: 18, color: "black" }}>{x.namaBarang}</td>
+                      <td style={{ fontSize: 18, color: "black" }}> {x.hargaJual}</td>
+                      <td style={{ fontSize: 18, color: "black" }}>{x.qty}</td>
+                      <td style={{ fontSize: 18, color: "black" }}>{x.subtotal}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot className="">
-
                   <tr>
                     <th className=""></th>
                     <th className=""></th>
-                    <th className="" style={{ fontFamily: "initial", fontSize: 40, color: 'black' }}>Total Bayar</th>
+                    <th className="" style={{ fontSize: 25, color: 'black' }}>Total Bayar</th>
                     <th className=""></th>
-                    <th className="" style={{ fontFamily: "initial", fontSize: 40, color: 'black' }}>
+                    <th className="" style={{ fontSize: 25, color: 'black' }}>
                       {currencyFormat(total)}
                     </th>
                     <th className=""></th>
                   </tr>
-
                 </tfoot>
               </table>
-
             </div>
 
-
-            <div className="mb-3 mt-5 row">
-              <label className="col-sm-5 col-form-label" style={{ fontFamily: "initial", fontSize: 33, color: "black" }}>Jumlah Uang</label>
-              <div className="col-sm-7">
+            <div className="mb-3 mt-3 row">
+              <label className="col-sm-4 col-form-label" style={{ fontSize: 25, color: "black" }}>Jumlah Uang</label>
+              <div className="col-sm-8">
                 <input
                   required
                   ref={refuang}
                   type="text"
                   className="form-control"
-                  style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 45, color: "green", borderColor: "grey", height: 60, fontWeight: 'bold' }}
+                  style={{ backgroundColor: 'white', fontSize: 30, color: "green", borderColor: "grey", height: 60, fontWeight: 'bold' }}
                   value={uang} onKeyPress={kalkulasi}
                   onChange={handleUang}
                   min='1'
@@ -679,14 +676,14 @@ const Kasir = () => {
               </div>
             </div>
             <div className="mb-3 row">
-              <label className="col-sm-5 col-form-label" style={{ fontFamily: "initial", fontSize: 33, color: "black" }}>Kembalian</label>
-              <label className="col-sm-7 col-form-label" style={{ fontFamily: "initial", fontSize: 40, color: "red", fontWeight: 'bold' }}>{kembalian ? currencyFormat(kembalian) : null}</label>
+              <label className="col-sm-4 col-form-label" style={{ fontSize: 25, color: "black" }}>Kembalian</label>
+              <label className="col-sm-8 col-form-label" style={{ fontSize: 30, color: "red", fontWeight: 'bold' }}>{kembalian ? currencyFormat(kembalian) : null}</label>
 
             </div>
           </Modal.Body>
           <Modal.Footer>
             <button type="button" className="btn btn-danger light" onClick={handleClose}>Close</button>
-            <button type="submit" className="btn btn-primary light">Simpan</button>
+            <button type="submit" className="btn btn-primary light" onClick={selesai}>Simpan</button>
           </Modal.Footer>
         </form>
       </Modal>
