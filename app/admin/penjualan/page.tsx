@@ -15,7 +15,6 @@ const Penjualan = () => {
   const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
   const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
   const [grandtotal, setGrandtotal] = useState(0)
-  const [filterText, setFilterText] = React.useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const componentRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +73,6 @@ const Penjualan = () => {
     const awal = new Date(tanggalawal).toISOString()
     const akhir = new Date(tanggalakhir + 'T23:59:59.999Z').toISOString()
     const xxx: any = datapecarian.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
-    console.log('tes', xxx);
     let x = []
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
@@ -126,7 +124,7 @@ const Penjualan = () => {
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => row.hargaJual,
+      selector: (row: any) => rupiah(row.hargaJual),
     },
     {
       name: 'Qty',
@@ -138,7 +136,7 @@ const Penjualan = () => {
     },
     {
       name: 'Sub Total',
-      selector: (row: any) => row.subtotal,
+      selector: (row: any) => rupiah(row.subtotal),
     },
   ];
 
