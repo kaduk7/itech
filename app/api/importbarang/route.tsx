@@ -10,10 +10,21 @@ export const POST = async (request: Request) => {
 
     var x = [];
     for (let i = 0; i < pilihbarang.length; i++) {
+        const cekkode = await prisma.barangTb.findUnique({
+            where: {
+                kodeBarang: pilihbarang[i].kodeBarang
+            },
+        })
+        if (cekkode) {
+            continue;
+        }
         const xxx = await prisma.kategoriTb.findFirst({
             where: {
-                nama: pilihbarang[i].kategori
-            },
+                nama: {
+                    contains: pilihbarang[i].kategori,
+                    mode: 'insensitive'
+                },
+            }
         })
         const kategoriId = xxx?.id
         x.push({
