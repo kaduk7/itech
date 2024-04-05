@@ -11,7 +11,7 @@ import "primereact/resources/primereact.min.css";
 const LabaPenjualan = () => {
 
   const [datapenjualan, setDatapenjualan] = useState([])
-  const [datapecarian, setDatapencarian] = useState([])
+  const [semuadata, setSemuaData] = useState([])
   const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
   const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
   const [grandtotal, setGrandtotal] = useState(0)
@@ -41,7 +41,7 @@ const LabaPenjualan = () => {
         laba: (Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)),
       }));
       setDatapenjualan(isidata)
-      setDatapencarian(isidata)
+      setSemuaData(isidata)
       x = isidata
       let total = 0;
       let totallaba = 0;
@@ -61,6 +61,8 @@ const LabaPenjualan = () => {
     setCurrentPage(page);
   };
 
+  const filteredItems = datapenjualan;
+
   const ttt = useReactToPrint({
     content: () => {
       if (componentRef.current) {
@@ -77,7 +79,7 @@ const LabaPenjualan = () => {
     }
     const awal = new Date(tanggalawal).toISOString()
     const akhir = new Date(tanggalakhir + 'T23:59:59.999Z').toISOString()
-    const xxx: any = datapecarian.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
+    const xxx: any = semuadata.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
     let x = []
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
@@ -104,12 +106,17 @@ const LabaPenjualan = () => {
   }
 
   const reset = () => {
-    reload()
+    let x = []
+    setDatapenjualan(semuadata)
+    x = semuadata
+    let total = 0;
+    x.forEach((item: any) => {
+      total += item.subtotal;
+    })
+    setGrandtotal(total)
     setTanggalawal(tanggalHariIni)
     setTanggalakhir(mingguDepan)
   }
-
-  const filteredItems = datapenjualan;
 
   const columns = [
     {
@@ -122,6 +129,7 @@ const LabaPenjualan = () => {
       name: 'No Faktur',
       selector: (row: any) => row.nofaktur,
       sortable: true,
+      width: '120px'
     },
     {
       name: 'Tanggal',
@@ -138,6 +146,7 @@ const LabaPenjualan = () => {
     {
       name: 'Qty',
       selector: (row: any) => row.qty,
+      width: '80px'
     },
     {
       name: 'Laba',

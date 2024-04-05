@@ -75,7 +75,7 @@ const Produk = () => {
   };
 
   const filteredItems = databarang.filter(
-    (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(filterText.toLowerCase()),
+    (item: any) => item.namaBarang && item.namaBarang.toLowerCase().includes(filterText.toLowerCase()) ,
   );
 
   const columns = [

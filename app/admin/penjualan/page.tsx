@@ -11,7 +11,7 @@ import "primereact/resources/primereact.min.css";
 const Penjualan = () => {
 
   const [datapenjualan, setDatapenjualan] = useState([])
-  const [datapecarian, setDatapencarian] = useState([])
+  const [semuadata, setSemuaData] = useState([])
   const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
   const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
   const [grandtotal, setGrandtotal] = useState(0)
@@ -39,7 +39,7 @@ const Penjualan = () => {
         subtotal: Number(item.hargaJual) * Number(item.qty)
       }));
       setDatapenjualan(isidata)
-      setDatapencarian(isidata)
+      setSemuaData(isidata)
       x = isidata
       let total = 0;
       x.forEach((item: any) => {
@@ -72,7 +72,7 @@ const Penjualan = () => {
     }
     const awal = new Date(tanggalawal).toISOString()
     const akhir = new Date(tanggalakhir + 'T23:59:59.999Z').toISOString()
-    const xxx: any = datapecarian.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
+    const xxx: any = semuadata.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
     let x = []
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
@@ -95,7 +95,14 @@ const Penjualan = () => {
   }
 
   const reset = () => {
-    reload()
+    let x = []
+    setDatapenjualan(semuadata)
+    x = semuadata
+    let total = 0;
+    x.forEach((item: any) => {
+      total += item.subtotal;
+    })
+    setGrandtotal(total)
     setTanggalawal(tanggalHariIni)
     setTanggalakhir(mingguDepan)
   }
@@ -129,10 +136,12 @@ const Penjualan = () => {
     {
       name: 'Qty',
       selector: (row: any) => row.qty,
+      width: '80px'
     },
     {
       name: 'Kasir',
       selector: (row: any) => row.kasir,
+      width: '90px'
     },
     {
       name: 'Sub Total',
@@ -141,7 +150,7 @@ const Penjualan = () => {
   ];
 
   const GrandTotalComponent = () => (
-    <div style={{ textAlign: 'right', paddingRight: '20px', marginTop: '10px',fontSize:20,fontWeight:'bold',color: 'black' }}>
+    <div style={{ textAlign: 'right', paddingRight: '20px', marginTop: '10px', fontSize: 20, fontWeight: 'bold', color: 'black' }}>
       Grand Total: {rupiah(grandtotal)}
     </div>
   );

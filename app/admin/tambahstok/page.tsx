@@ -67,7 +67,6 @@ const TambahStok = () => {
     }, 300);
   };
 
-  const router = useRouter()
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
@@ -75,7 +74,6 @@ const TambahStok = () => {
     setTimeout(function () {
       setbarcode()
     }, 500);
-
   }
   const handleShow = () => setShow(true);
   const setbarcode = () => {
@@ -469,6 +467,7 @@ const TambahStok = () => {
       }
       if (xxx.data.pesan === 'berhasil') {
         handleClose();
+        getbarang()
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -476,7 +475,6 @@ const TambahStok = () => {
           showConfirmButton: false,
           timer: 1500
         })
-        getbarang()
       }
     } catch (error) {
       console.error('Error:', error);
