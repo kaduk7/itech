@@ -16,6 +16,7 @@ const Penjualan = () => {
   const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
   const [grandtotal, setGrandtotal] = useState(0)
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterText, setFilterText] = React.useState('');
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const componentRef = useRef<HTMLDivElement | null>(null);
 
@@ -107,7 +108,10 @@ const Penjualan = () => {
     setTanggalakhir(mingguDepan)
   }
 
-  const filteredItems = datapenjualan;
+  const filteredItems = datapenjualan.filter(
+    (item: any) => item.TransaksiTB.nofaktur && item.TransaksiTB.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
+  );
+  // const filteredItems = datapenjualan;
 
   const columns = [
     {

@@ -15,6 +15,7 @@ const LabaPenjualan = () => {
   const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
   const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
   const [grandtotal, setGrandtotal] = useState(0)
+  const [filterText, setFilterText] = React.useState('');
   const [totallaba, setTotallaba] = useState(0)
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -61,7 +62,10 @@ const LabaPenjualan = () => {
     setCurrentPage(page);
   };
 
-  const filteredItems = datapenjualan;
+  const filteredItems = datapenjualan.filter(
+    (item: any) => item.TransaksiTB.nofaktur && item.TransaksiTB.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
+  );
+  // const filteredItems = datapenjualan;
 
   const ttt = useReactToPrint({
     content: () => {
