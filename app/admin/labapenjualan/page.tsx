@@ -63,7 +63,7 @@ const LabaPenjualan = () => {
   };
 
   const filteredItems = datapenjualan.filter(
-    (item: any) => item.TransaksiTB.nofaktur && item.TransaksiTB.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
+    (item: any) => item.nofaktur && item.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
   );
   // const filteredItems = datapenjualan;
 
