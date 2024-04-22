@@ -28,21 +28,15 @@ const Penjualan = () => {
     try {
       const response = await fetch(`/api/transaksi`);
       const result = await response.json();
+      setDatapenjualan(result)
+      setSemuaData(result)
       let x = []
-      const isidata = result.map((item: any) => ({
-        nofaktur: item.nofaktur,
-        tanggal: item.tanggal,
-        kasir: item.kasir,
-        detail: item.detailTransaksiTb,
-      }));
-      setDatapenjualan(isidata)
-      setSemuaData(isidata)
-      x = isidata
+      x = result
       let total = 0;
       x.forEach((item: any) => {
-        const y = item.detail
+        const y = item.detailTransaksiTb
         y.forEach((item: any) => {
-          total += Number(item.hargaJual) * Number(item.qty);
+          total += (Number(item.hargaJual) * Number(item.qty));
         })
       })
       setGrandtotal(total)
@@ -56,51 +50,48 @@ const Penjualan = () => {
     setCurrentPage(page);
   };
 
-  const ttt = useReactToPrint({
-    content: () => {
-      if (componentRef.current) {
-        return componentRef.current;
-      }
-      return null;
-    },
-    documentTitle: 'Print Laporan Barang',
-  });
+  // const ttt = useReactToPrint({
+  //   content: () => {
+  //     if (componentRef.current) {
+  //       return componentRef.current;
+  //     }
+  //     return null;
+  //   },
+  //   documentTitle: 'Print Laporan Barang',
+  // });
 
   const showw = async () => {
-    if (tanggalakhir === "" || tanggalawal === "") {
-      return
-    }
     const awal = new Date(tanggalawal).toISOString()
     const akhir = new Date(tanggalakhir + 'T23:59:59.999Z').toISOString()
     const xxx: any = semuadata.filter((item: any) => item.tanggal >= awal && item.tanggal <= akhir)
-    let x = []
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
       tanggal: item.tanggal,
       kasir: item.kasir,
-      detail: item.detail,
+      detailTransaksiTb: item.detailTransaksiTb,
     }));
     setDatapenjualan(isidata);
+    let x = []
     x = isidata
     let total = 0;
     x.forEach((item: any) => {
-      const y = item.detail
+      const y = item.detailTransaksiTb
       y.forEach((item: any) => {
-        total += Number(item.hargaJual) * Number(item.qty);
+        total += (Number(item.hargaJual) * Number(item.qty));
       })
     })
     setGrandtotal(total)
   }
 
   const reset = () => {
-    let x = []
     setDatapenjualan(semuadata)
+    let x = []
     x = semuadata
     let total = 0;
     x.forEach((item: any) => {
-      const y = item.detail
+      const y = item.detailTransaksiTb
       y.forEach((item: any) => {
-        total += Number(item.hargaJual) * Number(item.qty);
+        total += (Number(item.hargaJual) * Number(item.qty));
       })
     })
     setGrandtotal(total)
@@ -134,10 +125,10 @@ const Penjualan = () => {
     },
     {
       name: 'Nama Barang',
-      selector: (row: any) => row.detail,
+      selector: (row: any) => row.detailTransaksiTb,
       cell: (row: any) => (
         <div>
-          {row.detail?.map((item: any, index: any) => (
+          {row.detailTransaksiTb?.map((item: any, index: any) => (
             <div
               key={index}
               className="mt-3 mb-3"
@@ -151,10 +142,10 @@ const Penjualan = () => {
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => row.detail,
+      selector: (row: any) => row.detailTransaksiTb,
       cell: (row: any) => (
         <div>
-          {row.detail?.map((item: any, index: number) => (
+          {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-3 mb-3"
             >
@@ -167,10 +158,10 @@ const Penjualan = () => {
     },
     {
       name: 'Qty',
-      selector: (row: any) => row.detail,
+      selector: (row: any) => row.detailTransaksiTb,
       cell: (row: any) => (
         <div>
-          {row.detail?.map((item: any, index: number) => (
+          {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-3 mb-3"
             >
@@ -183,10 +174,10 @@ const Penjualan = () => {
     },
     {
       name: 'Sub Total',
-      selector: (row: any) => row.detail,
+      selector: (row: any) => row.detailTransaksiTb,
       cell: (row: any) => (
         <div>
-          {row.detail?.map((item: any, index: number) => (
+          {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-3 mb-3"
             >
@@ -243,7 +234,7 @@ const Penjualan = () => {
                   <span className="p-buttonset">
                     <Button label="Show" onClick={showw} icon="mdi mdi-eye" className="px-4" severity="info" />
                     <Button onClick={reset} icon="mdi mdi-refresh" className="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700" label="Reset" severity="success" />
-                    <Button label="Print" onClick={ttt} icon="mdi mdi-printer" severity="danger" />
+                    {/* <Button label="Print" onClick={ttt} icon="mdi mdi-printer" severity="danger" /> */}
                   </span>
                 </Col>
 
