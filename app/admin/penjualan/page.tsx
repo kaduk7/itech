@@ -7,6 +7,7 @@ import { mingguDepan, rupiah, tanggalHariIni, tanggalIndo } from '@/app/helper';
 import { useReactToPrint } from 'react-to-print';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import Add from './action/Add';
 
 const Penjualan = () => {
 
@@ -235,6 +236,7 @@ const Penjualan = () => {
                     <Button label="Show" onClick={showw} icon="mdi mdi-eye" className="px-4" severity="info" />
                     <Button onClick={reset} icon="mdi mdi-refresh" className="bg-bluegray-600 hover:bg-bluegray-400 border-bluegray-700" label="Reset" severity="success" />
                     {/* <Button label="Print" onClick={ttt} icon="mdi mdi-printer" severity="danger" /> */}
+                    <Add reload={reload} />
                   </span>
                 </Col>
 
