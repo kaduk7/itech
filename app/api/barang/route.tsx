@@ -60,6 +60,9 @@ export const GET = async () => {
     const barang = await prisma.barangTb.findMany({
         include: {
             KategoriTb: true,
+        },
+        orderBy:{
+            namaBarang:"asc"
         }
     });
     return NextResponse.json(barang, { status: 200 })

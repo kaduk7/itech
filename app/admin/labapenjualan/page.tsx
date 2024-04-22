@@ -31,15 +31,9 @@ const LabaPenjualan = () => {
       const result = await response.json();
       let x = []
       const isidata = result.map((item: any) => ({
-        nofaktur: item.TransaksiTB.nofaktur,
-        tanggal: item.TransaksiTB.tanggal,
-        namaBarang: item.BarangTb.namaBarang,
-        hargaModal: item.hargaModal,
-        hargaJual: item.hargaJual,
-        qty: item.qty,
-        kasir: item.TransaksiTB.kasir,
-        subtotal: Number(item.hargaJual) * Number(item.qty),
-        laba: (Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)),
+        nofaktur: item.nofaktur,
+        tanggal: item.tanggal,
+        detail: item.detailTransaksiTb,
       }));
       setDatapenjualan(isidata)
       setSemuaData(isidata)
@@ -47,8 +41,11 @@ const LabaPenjualan = () => {
       let total = 0;
       let totallaba = 0;
       x.forEach((item: any) => {
-        total += item.subtotal;
-        totallaba += item.laba;
+        const y = item.detail
+        y.forEach((item: any) => {
+          total += (Number(item.hargaJual) * Number(item.qty));
+          totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
+        })
       })
       setGrandtotal(total)
       setTotallaba(totallaba)
@@ -65,7 +62,6 @@ const LabaPenjualan = () => {
   const filteredItems = datapenjualan.filter(
     (item: any) => item.nofaktur && item.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
   );
-  // const filteredItems = datapenjualan;
 
   const ttt = useReactToPrint({
     content: () => {
@@ -88,25 +84,21 @@ const LabaPenjualan = () => {
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
       tanggal: item.tanggal,
-      namaBarang: item.namaBarang,
-      hargaModal: item.hargaModal,
-      hargaJual: item.hargaJual,
-      qty: item.qty,
-      kasir: item.kasir,
-      subtotal: Number(item.hargaJual) * Number(item.qty),
-      laba: (Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty))
+      detail: item.detail,
     }));
     setDatapenjualan(isidata);
     x = isidata
     let total = 0;
     let totallaba = 0;
     x.forEach((item: any) => {
-      total += item.subtotal;
-      totallaba += item.laba;
+      const y = item.detail
+      y.forEach((item: any) => {
+        total += (Number(item.hargaJual) * Number(item.qty));
+        totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
+      })
     })
     setGrandtotal(total)
     setTotallaba(totallaba)
-
   }
 
   const reset = () => {
@@ -114,10 +106,16 @@ const LabaPenjualan = () => {
     setDatapenjualan(semuadata)
     x = semuadata
     let total = 0;
+    let totallaba = 0;
     x.forEach((item: any) => {
-      total += item.subtotal;
+      const y = item.detail
+      y.forEach((item: any) => {
+        total += (Number(item.hargaJual) * Number(item.qty));
+        totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
+      })
     })
     setGrandtotal(total)
+    setTotallaba(totallaba)
     setTanggalawal(tanggalHariIni)
     setTanggalakhir(mingguDepan)
   }
@@ -133,7 +131,6 @@ const LabaPenjualan = () => {
       name: 'No Faktur',
       selector: (row: any) => row.nofaktur,
       sortable: true,
-      width: '120px'
     },
     {
       name: 'Tanggal',
@@ -141,24 +138,100 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Nama Barang',
-      selector: (row: any) => row.namaBarang,
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: any) => (
+            <div
+              key={index}
+              className="mt-3 mb-3"
+            >
+              {item.BarangTb.namaBarang.length > 25 ? `${item.BarangTb.namaBarang.slice(0, 25)}...` : item.BarangTb.namaBarang}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '250px'
+    },
+    {
+      name: 'Harga Modal',
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah(item.hargaModal)}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '130px'
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => rupiah(row.hargaJual),
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah(item.hargaJual)}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '130px'
     },
     {
       name: 'Qty',
-      selector: (row: any) => row.qty,
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {item.qty}
+            </div>
+          ))}
+        </div>
+      ),
       width: '80px'
     },
     {
       name: 'Laba',
-      selector: (row: any) => rupiah(row.laba),
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)))}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '150px'
     },
     {
       name: 'Sub Total',
-      selector: (row: any) => rupiah(row.subtotal),
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah(Number(item.hargaJual) * Number(item.qty))}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '150px'
     },
   ];
 

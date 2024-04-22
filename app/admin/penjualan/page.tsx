@@ -30,21 +30,20 @@ const Penjualan = () => {
       const result = await response.json();
       let x = []
       const isidata = result.map((item: any) => ({
-        nofaktur: item.TransaksiTB.nofaktur,
-        tanggal: item.TransaksiTB.tanggal,
-        namaBarang: item.BarangTb.namaBarang,
-        hargaModal: item.hargaModal,
-        hargaJual: item.hargaJual,
-        qty: item.qty,
-        kasir: item.TransaksiTB.kasir,
-        subtotal: Number(item.hargaJual) * Number(item.qty)
+        nofaktur: item.nofaktur,
+        tanggal: item.tanggal,
+        kasir: item.kasir,
+        detail: item.detailTransaksiTb,
       }));
       setDatapenjualan(isidata)
       setSemuaData(isidata)
       x = isidata
       let total = 0;
       x.forEach((item: any) => {
-        total += item.subtotal;
+        const y = item.detail
+        y.forEach((item: any) => {
+          total += Number(item.hargaJual) * Number(item.qty);
+        })
       })
       setGrandtotal(total)
     } catch (error) {
@@ -78,21 +77,19 @@ const Penjualan = () => {
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
       tanggal: item.tanggal,
-      namaBarang: item.namaBarang,
-      hargaModal: item.hargaModal,
-      hargaJual: item.hargaJual,
-      qty: item.qty,
       kasir: item.kasir,
-      subtotal: Number(item.hargaJual) * Number(item.qty)
+      detail: item.detail,
     }));
     setDatapenjualan(isidata);
     x = isidata
     let total = 0;
     x.forEach((item: any) => {
-      total += item.subtotal;
+      const y = item.detail
+      y.forEach((item: any) => {
+        total += Number(item.hargaJual) * Number(item.qty);
+      })
     })
     setGrandtotal(total)
-
   }
 
   const reset = () => {
@@ -101,7 +98,10 @@ const Penjualan = () => {
     x = semuadata
     let total = 0;
     x.forEach((item: any) => {
-      total += item.subtotal;
+      const y = item.detail
+      y.forEach((item: any) => {
+        total += Number(item.hargaJual) * Number(item.qty);
+      })
     })
     setGrandtotal(total)
     setTanggalawal(tanggalHariIni)
@@ -111,7 +111,6 @@ const Penjualan = () => {
   const filteredItems = datapenjualan.filter(
     (item: any) => item.nofaktur && item.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
   );
-  // const filteredItems = datapenjualan;
 
   const columns = [
     {
@@ -130,26 +129,73 @@ const Penjualan = () => {
       selector: (row: any) => tanggalIndo(row.tanggal),
     },
     {
+      name: 'Kasir',
+      selector: (row: any) => row.kasir,
+    },
+    {
       name: 'Nama Barang',
-      selector: (row: any) => row.namaBarang,
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: any) => (
+            <div
+              key={index}
+              className="mt-3 mb-3"
+            >
+              {item.BarangTb.namaBarang.length > 40 ? `${item.BarangTb.namaBarang.slice(0, 40)}...` : item.BarangTb.namaBarang}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '300px'
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => rupiah(row.hargaJual),
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah(item.hargaJual)}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '150px'
     },
     {
       name: 'Qty',
-      selector: (row: any) => row.qty,
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {item.qty}
+            </div>
+          ))}
+        </div>
+      ),
       width: '80px'
     },
     {
-      name: 'Kasir',
-      selector: (row: any) => row.kasir,
-      width: '90px'
-    },
-    {
       name: 'Sub Total',
-      selector: (row: any) => rupiah(row.subtotal),
+      selector: (row: any) => row.detail,
+      cell: (row: any) => (
+        <div>
+          {row.detail?.map((item: any, index: number) => (
+            <div key={index}
+              className="mt-3 mb-3"
+            >
+              {rupiah(Number(item.hargaJual) * Number(item.qty))}
+            </div>
+          ))}
+        </div>
+      ),
+      width: '180px'
     },
   ];
 
