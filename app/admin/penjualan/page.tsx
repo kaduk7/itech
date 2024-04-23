@@ -134,12 +134,12 @@ const Penjualan = () => {
               key={index}
               className="mt-3 mb-3"
             >
-              {item.BarangTb.namaBarang.length > 40 ? `${item.BarangTb.namaBarang.slice(0, 40)}...` : item.BarangTb.namaBarang}
+              {item.BarangTb.namaBarang.length > 20 ? `${item.BarangTb.namaBarang.slice(0, 20)}...` : item.BarangTb.namaBarang}
             </div>
           ))}
         </div>
       ),
-      width: '300px'
+      width: '200px'
     },
     {
       name: 'Harga Jual',
@@ -203,7 +203,7 @@ const Penjualan = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title" style={{ fontFamily: "initial", fontSize: 20 }}>Laporan Penjualan</h1>
+              <h1 className="card-title">Laporan Penjualan</h1>
             </div>
             <div className="card-body">
               <Row className="mb-4">
@@ -257,14 +257,6 @@ const Penjualan = () => {
                     style: {
                       backgroundColor: '#53d0b2',
                       fontSize: 15,
-                      fontWeight: 'bold',
-                      fontFamily: 'initial'
-                    },
-                  },
-                  cells: {
-                    style: {
-                      fontSize: 15,
-                      fontFamily: 'initial',
                     },
                   },
                 }}

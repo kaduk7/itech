@@ -77,7 +77,7 @@ const Karyawan = () => {
       <div className="col-md-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-header">
-            <h1 className="card-title" style={{ fontFamily: "initial", fontSize: 20 }}>Data Karyawan</h1>
+            <h1 className="card-title">Data Karyawan</h1>
           </div>
           <div className="card-body">
             <div className="row mb-3">
@@ -115,14 +115,6 @@ const Karyawan = () => {
                   style: {
                     backgroundColor: '#53d0b2',
                     fontSize: 15,
-                    fontWeight: 'bold',
-                    fontFamily: 'initial'
-                  },
-                },
-                cells: {
-                  style: {
-                    fontSize: 15,
-                    fontFamily: 'initial',
                   },
                 },
               }}

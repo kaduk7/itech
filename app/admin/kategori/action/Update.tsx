@@ -65,18 +65,17 @@ function Update({ kategori, reload }: { kategori: KategoriTb, reload: Function }
                 keyboard={false}>
                 <form onSubmit={handleUpdate}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ fontFamily: "monospace", fontSize: 30, color: "black" }}>Edit Data Kategori</Modal.Title>
+                        <Modal.Title>Edit Data Kategori</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
-                        <div className="mb-3 row">
-                            <label className="col-sm-4 col-form-label" style={{ fontFamily: "initial", fontSize: 20, color: "black" }}>Nama Kategori</label>
+                        <div className=" row">
+                            <label className="col-sm-4 col-form-label">Nama Kategori</label>
                             <div className="col-sm-8">
                                 <input
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={nama} onChange={(e) => setNama(e.target.value)}
                                 />
                             </div>

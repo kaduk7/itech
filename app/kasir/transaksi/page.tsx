@@ -416,7 +416,7 @@ const Kasir = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title " style={{ fontSize: 20 }}>Kasir</h1>
+              <h1 className="card-title " >Kasir</h1>
             </div>
             <div className="card-body">
               <form className="" onSubmit={handleSubmit}>
@@ -437,7 +437,7 @@ const Kasir = () => {
                     <div className="col-sm-1"></div>
 
                     <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Tanggal</label>
-                    <div className="col-sm-2">
+                    <div className="col-sm-3">
                       <input
                         disabled
                         required

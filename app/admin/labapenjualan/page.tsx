@@ -119,11 +119,11 @@ const LabaPenjualan = () => {
       sortable: false,
       width: '80px'
     },
-    {
-      name: 'No Faktur',
-      selector: (row: any) => row.nofaktur,
-      sortable: true,
-    },
+    // {
+    //   name: 'No Faktur',
+    //   selector: (row: any) => row.nofaktur,
+    //   sortable: true,
+    // },
     {
       name: 'Tanggal',
       selector: (row: any) => tanggalIndo(row.tanggal),
@@ -138,12 +138,12 @@ const LabaPenjualan = () => {
               key={index}
               className="mt-3 mb-3"
             >
-              {item.BarangTb.namaBarang.length > 25 ? `${item.BarangTb.namaBarang.slice(0, 25)}...` : item.BarangTb.namaBarang}
+              {item.BarangTb.namaBarang.length > 20 ? `${item.BarangTb.namaBarang.slice(0, 20)}...` : item.BarangTb.namaBarang}
             </div>
           ))}
         </div>
       ),
-      width: '250px'
+      width: '200px'
     },
     {
       name: 'Harga Modal',
@@ -191,7 +191,7 @@ const LabaPenjualan = () => {
           ))}
         </div>
       ),
-      width: '80px'
+      width: '70px'
     },
     {
       name: 'Laba',
@@ -247,7 +247,7 @@ const LabaPenjualan = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title" style={{ fontFamily: "initial", fontSize: 20 }}>Laporan Laba Penjualan</h1>
+              <h1 className="card-title">Laporan Laba Penjualan</h1>
             </div>
             <div className="card-body">
               <Row className="mb-4">
@@ -300,14 +300,6 @@ const LabaPenjualan = () => {
                     style: {
                       backgroundColor: '#53d0b2',
                       fontSize: 15,
-                      fontWeight: 'bold',
-                      fontFamily: 'initial'
-                    },
-                  },
-                  cells: {
-                    style: {
-                      fontSize: 15,
-                      fontFamily: 'initial',
                     },
                   },
                 }}

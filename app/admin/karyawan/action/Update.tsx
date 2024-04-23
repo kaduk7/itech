@@ -144,19 +144,18 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
                 keyboard={false}>
                 <form onSubmit={handleUpdate}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Edit Data Karyawan</Modal.Title>
+                        <Modal.Title>Edit Data Karyawan</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
                         <div className="row">
                             <div className="mb-3 col-md-12">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Nama Karyawan</label>
+                                <label className="col-sm-6 col-form-label">Nama Karyawan</label>
                                 <input
                                     autoFocus
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={nama} onChange={(e) => setNama(e.target.value)}
                                 />
                             </div>
@@ -164,22 +163,20 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Tempat Lahir</label>
+                                <label className="col-sm-6 col-form-label">Tempat Lahir</label>
                                 <input
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={tempatLahir} onChange={(e) => setTempatlahir(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Tanggal Lahir</label>
+                                <label className="col-sm-6 col-form-label">Tanggal Lahir</label>
                                 <input
                                     required
                                     type="date"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={tanggalLahir} onChange={(e) => setTanggallahir(e.target.value)}
                                 />
                             </div>
@@ -187,11 +184,10 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
 
                         <div className="row">
                             <div className="mb-3 col-md-12">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Alamat</label>
+                                <label className="col-sm-6 col-form-label">Alamat</label>
                                 <textarea
                                     required
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={alamat} onChange={(e) => setAlamat(e.target.value)}
                                 />
                             </div>
@@ -199,17 +195,16 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>No Hp</label>
+                                <label className="col-sm-6 col-form-label">No Hp</label>
                                 <input
                                     required
                                     type="number"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={hp} onChange={(e) => setHp(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Jabatan</label>
+                                <label className="col-sm-6 col-form-label">Jabatan</label>
                                 <Select
                                     required
                                     placeholder="Search..."
@@ -220,14 +215,12 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
                                         control: (baseStyles, state) => ({
                                             ...baseStyles,
                                             borderColor: state.isFocused ? 'blue' : 'grey',
-                                            fontSize: state.isFocused ? 20 : 20,
-                                            fontFamily: "initial",
+                                            fontSize: state.isFocused ? 15 : 15,
                                         }),
                                         option: (baseStyles, state) => ({
                                             ...baseStyles,
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             color: "black",
-                                            fontFamily: "initial",
                                         }),
                                     }}
                                 />
@@ -236,24 +229,22 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Email</label>
+                                <label className="col-sm-6 col-form-label">Email</label>
                                 <input
                                     required
                                     type="email"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={email} onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-6 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Password</label>
+                                <label className="col-sm-6 col-form-label">Password</label>
                                 <div className="input-group">
                                     <input
                                         type={st ? "text" : "password"}
                                         className="form-control"
                                         aria-label="Recipient's username"
                                         aria-describedby="basic-addon2"
-                                        style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                         value={password} onChange={(e) => setPassword(e.target.value)}
                                     />
                                     {st ?

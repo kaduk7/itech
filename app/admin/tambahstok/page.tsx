@@ -514,14 +514,14 @@ const TambahStok = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title" style={{ fontSize: 20 }}>Tambah Stok</h1>
+              <h1 className="card-title">Tambah Stok</h1>
             </div>
             <div className="card-body">
               <form className="" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label" style={{ fontSize: 15, color: "black" }}>Tanggal</label>
-                    <div className="col-sm-2">
+                    <div className="col-sm-3">
                       <input
                         required
                         type="date"

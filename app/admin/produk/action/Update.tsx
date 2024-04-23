@@ -174,30 +174,28 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                 keyboard={false}>
                 <form onSubmit={handleUpdate}>
                     <Modal.Header closeButton>
-                        <Modal.Title style={{ fontFamily: "initial", fontSize: 25, color: "black" }}>Edit Data Barang</Modal.Title>
+                        <Modal.Title>Edit Data Barang</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kode Barang</label>
+                                <label className="col-sm-3 col-form-label">Kode Barang</label>
                                 <input
                                     disabled
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={kodeBarang} onChange={(e) => setKodebarang(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Nama Barang</label>
+                                <label className="col-sm-3 col-form-label">Nama Barang</label>
                                 <input
                                     autoFocus
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={namaBarang} onChange={(e) => setNamabarang(e.target.value)}
                                 />
                             </div>
@@ -205,7 +203,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Kategori</label>
+                                <label className="col-sm-3 col-form-label">Kategori</label>
                                 <Select
                                     required
                                     placeholder="Search..."
@@ -216,12 +214,11 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Merek</label>
+                                <label className="col-sm-3 col-form-label">Merek</label>
                                 <input
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={merek} onChange={(e) => setMerek(e.target.value)}
                                 />
                             </div>
@@ -229,22 +226,20 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Unit</label>
+                                <label className="col-sm-3 col-form-label">Unit</label>
                                 <input
                                     required
                                     type="text"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={unit} onChange={(e) => setUnit(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Stok</label>
+                                <label className="col-sm-3 col-form-label">Stok</label>
                                 <input
                                     required
                                     type="number"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={stok}
                                     onChange={handlechangestok}
                                     min='1'
@@ -254,24 +249,22 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
 
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Harga Modal</label>
+                                <label className="col-sm-3 col-form-label">Harga Modal</label>
                                 <input
                                     required
                                     type="number"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={hargaModal}
                                     onChange={handlechangemodal}
                                     min='1'
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Harga Jual</label>
+                                <label className="col-sm-3 col-form-label">Harga Jual</label>
                                 <input
                                     required
                                     type="number"
                                     className="form-control"
-                                    style={{ fontFamily: "initial", backgroundColor: 'white', fontSize: 20, color: "black", borderColor: "grey" }}
                                     value={hargaJual}
                                     onChange={handlechangejual}
                                     min='1'
@@ -279,16 +272,15 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                             </div>
                         </div>
 
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label className="col-sm-3 col-form-label" style={{ fontFamily: "initial", fontSize: 15, fontWeight: 'bold', color: "black" }}>Foto</label>
+                                <label className="col-sm-3 col-form-label">Foto</label>
                                 <input
                                     type="file"
                                     id="inputGroupFile01"
                                     name="file"
                                     className="form-control mb-3"
                                     onChange={(e) => setFile(e.target.files?.[0])}
-                                    style={{ backgroundColor: 'white', color: "black", borderColor: "grey" }}
                                 />
                                 <button
                                     id="reset"
@@ -328,7 +320,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                                     onEditorChange={handleEditorChange}
                                 />
                             </div>
-                        </div>
+                        </div> */}
 
                     </Modal.Body>
                     <Modal.Footer>

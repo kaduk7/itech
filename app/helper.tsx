@@ -46,14 +46,13 @@ export const StyleSelect = {
         ...provided,
         border: '1px solid #ccc',
         borderRadius: '4px',
-        fontSize: 17,
+        fontSize: 15,
         boxShadow: state.isFocused ? '0 0 0 2px #007bff' : null,
     }),
     option: (provided: any, state: any) => ({
         ...provided,
-        fontSize: 20,
+        fontSize: 15,
         color: "black",
-        fontFamily: "initial",
     }),
     menu: (provided: any) => ({
         ...provided,

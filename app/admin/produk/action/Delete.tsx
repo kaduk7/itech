@@ -55,7 +55,7 @@ function Delete({foto, barangid, reload }: { foto: string,barangid: Number, relo
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Body>
-                    <h6 className="font-bold" style={{ color: "black", fontSize: 25 }}>Anda yakin menghapus data ini ?</h6>
+                    <h6 className="font-bold" style={{ color: "black", fontSize: 15 }}>Anda yakin menghapus data ini ?</h6>
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="btn btn-warning light" onClick={handleClose}>Close</button>
