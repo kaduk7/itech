@@ -28,7 +28,8 @@ const LabaPenjualan = () => {
   const reload = async () => {
     try {
       const response = await fetch(`/api/transaksi`);
-      const result = await response.json();
+      const hasil = await response.json();
+      const result = hasil.data
       setDatapenjualan(result)
       setSemuaData(result)
       let x = []
@@ -136,7 +137,7 @@ const LabaPenjualan = () => {
           {row.detailTransaksiTb?.map((item: any, index: any) => (
             <div
               key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {item.BarangTb.namaBarang.length > 20 ? `${item.BarangTb.namaBarang.slice(0, 20)}...` : item.BarangTb.namaBarang}
             </div>
@@ -152,7 +153,7 @@ const LabaPenjualan = () => {
         <div>
           {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {rupiah(item.hargaModal)}
             </div>
@@ -168,7 +169,7 @@ const LabaPenjualan = () => {
         <div>
           {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {rupiah(item.hargaJual)}
             </div>
@@ -184,7 +185,7 @@ const LabaPenjualan = () => {
         <div>
           {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {item.qty}
             </div>
@@ -200,7 +201,7 @@ const LabaPenjualan = () => {
         <div>
           {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {rupiah((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)))}
             </div>
@@ -216,7 +217,7 @@ const LabaPenjualan = () => {
         <div>
           {row.detailTransaksiTb?.map((item: any, index: number) => (
             <div key={index}
-              className="mt-3 mb-3"
+              className="mt-4 mb-4"
             >
               {rupiah(Number(item.hargaJual) * Number(item.qty))}
             </div>
