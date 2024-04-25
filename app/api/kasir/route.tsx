@@ -48,8 +48,6 @@ export const POST = async (request: Request) => {
                 },
                 data: {
                     stok: Number(pilihbarang[i].stokakhir),
-                    hargaModal: Number(pilihbarang[i].hargaModal),
-                    hargaJual: Number(pilihbarang[i].hargaJual),
                 },
             })
         }

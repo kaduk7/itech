@@ -27,7 +27,7 @@ const LabaPenjualan = () => {
 
   const reload = async () => {
     try {
-      const response = await fetch(`/admin/api/transaksi`);
+      const response = await fetch(`/admin/api/laporan`);
       const hasil = await response.json();
       const result = hasil.data
       setDatapenjualan(result)

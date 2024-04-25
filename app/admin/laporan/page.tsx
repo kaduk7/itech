@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 // import Update from './action/Update';
 // import Delete from './action/Delete';
 import { mingguDepan, rupiah, tanggalHariIni, tanggalIndo } from '@/app/helper';
+import axios from 'axios';
 
 const Laporan = () => {
   const [datapenjualan, setDatapenjualan] = useState([])
@@ -22,10 +23,11 @@ const Laporan = () => {
 
   const reload = async () => {
     try {
-      const response = await fetch(`/admin/api/transaksi`);
-      const hasil = await response.json();
+      const response = await axios.get('/admin/api/laporan');
+      const hasil = await response.data;
       const result = hasil.data
       setDatapenjualan(result)
+      console.log('data',result)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
