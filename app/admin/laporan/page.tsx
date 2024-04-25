@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component';
 // import Delete from './action/Delete';
 import { mingguDepan, rupiah, tanggalHariIni, tanggalIndo } from '@/app/helper';
 
-const Kategori = () => {
+const Laporan = () => {
   const [datapenjualan, setDatapenjualan] = useState([])
   const [semuadata, setSemuaData] = useState([])
   const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
@@ -183,4 +183,4 @@ const Kategori = () => {
   )
 }
 
-export default Kategori
+export default Laporan
