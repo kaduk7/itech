@@ -91,7 +91,6 @@ model DetailTransaksiTb {
   hargaModal  Int
   hargaJual   Int
   qty         Int
-  tanggal     DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
