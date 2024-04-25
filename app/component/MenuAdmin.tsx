@@ -44,6 +44,12 @@ export default function MenuAdmin() {
                             <li>
                                 <Link href="/admin/karyawan">Karyawan</Link>
                             </li>
+                            <li>
+                                <Link href="/admin/penjualan">Laporan Penjualan</Link>
+                            </li>
+                            <li>
+                                <Link href="/admin/labapenjualan">Laporan Laba Penjualan</Link>
+                            </li>
 
                         </ul>
                     </li>
