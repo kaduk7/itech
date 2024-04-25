@@ -32,16 +32,16 @@ const Penjualan = () => {
       const result = hasil.data
       setDatapenjualan(result)
       setSemuaData(result)
-      let x = []
-      x = result
-      let total = 0;
-      x.forEach((item: any) => {
-        const y = item.detailTransaksiTb
-        y.forEach((item: any) => {
-          total += (Number(item.hargaJual) * Number(item.qty));
-        })
-      })
-      setGrandtotal(total)
+      // let x = []
+      // x = result
+      // let total = 0;
+      // x.forEach((item: any) => {
+      //   const y = item.detailTransaksiTb
+      //   y.forEach((item: any) => {
+      //     total += (Number(item.hargaJual) * Number(item.qty));
+      //   })
+      // })
+      // setGrandtotal(total)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -73,30 +73,30 @@ const Penjualan = () => {
       detailTransaksiTb: item.detailTransaksiTb,
     }));
     setDatapenjualan(isidata);
-    let x = []
-    x = isidata
-    let total = 0;
-    x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
-      y.forEach((item: any) => {
-        total += (Number(item.hargaJual) * Number(item.qty));
-      })
-    })
-    setGrandtotal(total)
+    // let x = []
+    // x = isidata
+    // let total = 0;
+    // x.forEach((item: any) => {
+    //   const y = item.detailTransaksiTb
+    //   y.forEach((item: any) => {
+    //     total += (Number(item.hargaJual) * Number(item.qty));
+    //   })
+    // })
+    // setGrandtotal(total)
   }
 
   const reset = () => {
     setDatapenjualan(semuadata)
-    let x = []
-    x = semuadata
-    let total = 0;
-    x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
-      y.forEach((item: any) => {
-        total += (Number(item.hargaJual) * Number(item.qty));
-      })
-    })
-    setGrandtotal(total)
+    // let x = []
+    // x = semuadata
+    // let total = 0;
+    // x.forEach((item: any) => {
+    //   const y = item.detailTransaksiTb
+    //   y.forEach((item: any) => {
+    //     total += (Number(item.hargaJual) * Number(item.qty));
+    //   })
+    // })
+    // setGrandtotal(total)
     setTanggalawal(tanggalHariIni)
     setTanggalakhir(mingguDepan)
   }

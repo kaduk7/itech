@@ -16,7 +16,6 @@ export const POST = async (request: Request) => {
         return NextResponse.json({ pesan: 'kode barang sudah ada' })
     }
 
-
     if (fotokosong === 'no') {
         await prisma.barangTb.create({
             data: {
@@ -51,9 +50,6 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ pesan: 'berhasil' })
 }
-
-
-
 
 
 export const GET = async () => {
