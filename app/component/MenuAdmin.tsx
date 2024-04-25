@@ -44,13 +44,6 @@ export default function MenuAdmin() {
                             <li>
                                 <Link href="/admin/karyawan">Karyawan</Link>
                             </li>
-                            <li>
-                                <Link href="/admin/penjualan">Laporan Penjualan</Link>
-                            </li>
-                            <li>
-                                <Link href="/admin/labapenjualan">Laporan Laba Penjualan</Link>
-                            </li>
-
                         </ul>
                     </li>
 
@@ -102,6 +95,9 @@ export default function MenuAdmin() {
                         </a>
                         <ul aria-expanded="false" id="laporan">
                             <li className="mini-dashboard">Laporan</li>
+                            <li>
+                                <Link href="/admin/laporan">Laporan</Link>
+                            </li>
                             <li>
                                 <Link href="/admin/penjualan">Laporan Penjualan</Link>
                             </li>
