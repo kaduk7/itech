@@ -23,7 +23,7 @@ const Laporan = () => {
   }, [])
 
   const coba = () => {
-    fetch('/admin/api/transaksi', {
+    fetch('/admin/api/laporan', {
       headers: {
         'Cache-Control': 'no-cache'
       }
