@@ -44,6 +44,9 @@ export default function MenuAdmin() {
                             <li>
                                 <Link href="/admin/karyawan">Karyawan</Link>
                             </li>
+                            <li>
+                                <Link href="/admin/coba">Coba</Link>
+                            </li>
                         </ul>
                     </li>
 

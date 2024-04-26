@@ -1,51 +1,38 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-// import Add from './action/Add';
-// import Update from './action/Update';
-// import Delete from './action/Delete';
-import { mingguDepan, rupiah, tanggalHariIni, tanggalIndo } from '@/app/helper';
-import axios from 'axios';
+import Add from './action/Add';
+import Update from './action/Update';
+import Delete from './action/Delete';
 
-const Laporan = () => {
-  const [datapenjualan, setDatapenjualan] = useState([])
-  const [semuadata, setSemuaData] = useState([])
-  const [tanggalawal, setTanggalawal] = useState(tanggalHariIni)
-  const [tanggalakhir, setTanggalakhir] = useState(mingguDepan)
-  const [grandtotal, setGrandtotal] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1);
+
+const Kategori = () => {
+  const [datakategori, setDatakategori] = useState([])
   const [filterText, setFilterText] = React.useState('');
-  const [itemsPerPage, setItemsPerPage] = useState(5);;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('admin/api/transaksi');
-      const data = await response.json();
-      setDatapenjualan(data);
-    };
-  
-    fetchData();
-    // reload()
+    reload()
   }, [])
 
-  // const reload = async () => {
-  //   try {
-  //     const response = await axios.get('/admin/api/transaksi');
-  //     const hasil = await response.data;
-  //     const result = hasil.data
-  //     setDatapenjualan(result)
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // }
+  const reload = async () => {
+    try {
+      const response = await fetch(`/api/kategori`);
+      const result = await response.json();
+      setDatakategori(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const handleRowsPerPageChange = (newPerPage: number, page: number) => {
     setItemsPerPage(newPerPage);
     setCurrentPage(page);
   };
 
-  const filteredItems = datapenjualan.filter(
-    (item: any) => item.nofaktur && item.nofaktur.toLowerCase().includes(filterText.toLowerCase()),
+  const filteredItems = datakategori.filter(
+    (item: any) => item.nama && item.nama.toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const columns = [
@@ -56,19 +43,21 @@ const Laporan = () => {
       width: '80px'
     },
     {
-      name: 'No Faktur',
-      selector: (row: any) => row.nofaktur,
+      name: 'Nama Kategori',
+      selector: (row: any) => row.nama,
       sortable: true,
     },
     {
-      name: 'Tanggal',
-      selector: (row: any) => tanggalIndo(row.tanggal),
+      name: 'Action',
+      cell: (row: any) => (
+        <div className="d-flex">
+          <Update reload={reload} kategori={row} />
+          <Delete reload={reload} kategoriid={row.id} />
+        </div>
+      ),
+      width: '150px'
     },
-    {
-      name: 'Kasir',
-      selector: (row: any) => row.kasir,
-    },
-   
+
   ];
 
   return (
@@ -77,15 +66,26 @@ const Laporan = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-header">
-              <h1 className="card-title">Data Laporan</h1>
+              <h1 className="card-title">Data Kategori</h1>
             </div>
             <div className="card-body">
               <div className="row mb-3">
                 <div className="col-md-9">
-                  {/* <Add reload={reload} /> */}
+                  <Add  />
                 </div>
                 <div className="col-md-3">
-                 
+                  <div className="input-group mb-3  input-success">
+                    <span className="input-group-text border-0"><i className="mdi mdi-magnify"></i></span>
+                    <input
+                      id="search"
+                      type="text"
+                      placeholder="Search..."
+                      aria-label="Search Input"
+                      value={filterText}
+                      onChange={(e: any) => setFilterText(e.target.value)}
+                      className="form-control"
+                    />
+                  </div>
                 </div>
               </div>
               <DataTable
@@ -116,4 +116,4 @@ const Laporan = () => {
   )
 }
 
-export default Laporan
+export default Kategori
