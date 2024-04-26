@@ -9,7 +9,7 @@ export const GET = async () => {
           id:'asc'
       }
   });
-  return NextResponse.json( { status: 200 ,data:kategori})
+  return NextResponse.json(kategori, { status: 200 })
 }
 
 // export const GET = async () => {
