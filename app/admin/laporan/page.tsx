@@ -19,7 +19,7 @@ const Laporan = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('admin/api/transaksi');
+      const response = await fetch('/admin/api/transaksi');
       const data = await response.json();
       setDatapenjualan(data);
     };

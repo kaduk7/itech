@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 export const POST = async (request: Request) => {
     const formData = await request.formData()
 
-    const transaksi = await prisma.transaksiTB.create({
+    await prisma.transaksiTB.create({
         data: {
             nofaktur: String(formData.get('nofaktur')),
             kasir: String(formData.get('kasir')),
@@ -52,7 +52,7 @@ export const POST = async (request: Request) => {
             })
         }
     }
-    return NextResponse.json(transaksi, { status: 201 })
+    return NextResponse.json({ pesan: 'berhasil' })
 }
 
 export const GET = async () => {

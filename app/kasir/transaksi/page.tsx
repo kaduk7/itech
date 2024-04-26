@@ -385,11 +385,23 @@ const Kasir = () => {
     formData.append('kasir', String(kasir))
     formData.append('selected', JSON.stringify(inputFields))
 
-    await axios.post(`/api/kasir`, formData, {
+    const xxx = await axios.post(`/api/kasir`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
+    if (xxx.data.pesan === 'berhasil') {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Berhasil simpan',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      refresh();
+      refresh2();
+      getbarang()
+    }
     Swal.fire({
       position: 'top-end',
       icon: 'success',
