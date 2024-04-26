@@ -18,36 +18,23 @@ const Laporan = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);;
 
   useEffect(() => {
-    // reload()
-    coba()
+    reload()
   }, [])
 
-  const coba = () => {
-    fetch('/admin/api/laporan', {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    })
-      .then(response => response.json())
-      .then(hasil => {
-        setDatapenjualan(hasil.data)
+  const reload = async () => {
+    try {
+      const response = await fetch(`/admin/api/laporan`, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
       });
+      const hasil = await response.json();
+      const result = hasil.data
+      setDatapenjualan(result)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }
-
-  // const reload = async () => {
-  //   try {
-  //     const response = await fetch(`/admin/api/transaksi`, {
-  //       headers: {
-  //         'Cache-Control': 'no-cache'
-  //       }
-  //     });
-  //     const hasil = await response.json();
-  //     const result = hasil.data
-  //     setDatapenjualan(result)
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // }
 
   const handleRowsPerPageChange = (newPerPage: number, page: number) => {
     setItemsPerPage(newPerPage);
