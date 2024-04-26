@@ -16,12 +16,3 @@ export const GET = async () => {
   return NextResponse.json({ status: 200, data:transaksi })
 }
 
-// export const GET = async () => {
-//   const transaksi = await prisma.detailTransaksiTb.findMany({
-//     include: {
-//       TransaksiTB:true,
-//       BarangTb:true,
-//     }
-//   });
-//   return NextResponse.json(transaksi, { status: 200 })
-// }
