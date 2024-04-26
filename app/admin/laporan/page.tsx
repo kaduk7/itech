@@ -23,14 +23,9 @@ const Laporan = () => {
 
   const reload = async () => {
     try {
-      const response = await fetch(`/admin/api/laporan`, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      });
+      const response = await fetch(`/admin/api/laporan`);
       const hasil = await response.json();
-      const result = hasil.data
-      setDatapenjualan(result)
+      setDatapenjualan(hasil)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
