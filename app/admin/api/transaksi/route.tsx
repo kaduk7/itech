@@ -4,12 +4,12 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export const GET = async () => {
-  const kategori = await prisma.transaksiTB.findMany({
+  const transaksi = await prisma.transaksiTB.findMany({
       orderBy:{
           id:'asc'
       }
   });
-  return NextResponse.json(kategori, { status: 200 })
+  return NextResponse.json({status: 200, data:transaksi })
 }
 
 // export const GET = async () => {

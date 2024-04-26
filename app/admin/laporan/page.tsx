@@ -19,11 +19,18 @@ const Laporan = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/admin/api/transaksi');
-      const data = await response.json();
+      const response = await fetch('/admin/api/transaksi',
+        {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        }
+      );
+      const hasil = await response.json();
+      const data = hasil.data
       setDatapenjualan(data);
     };
-  
+
     fetchData();
     // reload()
   }, [])
@@ -68,7 +75,7 @@ const Laporan = () => {
       name: 'Kasir',
       selector: (row: any) => row.kasir,
     },
-   
+
   ];
 
   return (
@@ -85,7 +92,7 @@ const Laporan = () => {
                   {/* <Add reload={reload} /> */}
                 </div>
                 <div className="col-md-3">
-                 
+
                 </div>
               </div>
               <DataTable
