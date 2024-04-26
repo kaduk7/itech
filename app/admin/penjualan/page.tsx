@@ -27,8 +27,7 @@ const Penjualan = () => {
 
   const reload = async () => {
     try {
-      const timestamp = new Date().getTime(); 
-      const response = await fetch(`/admin/api/laporan?ts=${timestamp}`);
+      const response = await fetch(`/admin/api/laporan`);
       const hasil = await response.json();
       const result = hasil.data
       setDatapenjualan(result)

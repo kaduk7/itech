@@ -23,11 +23,10 @@ const Laporan = () => {
 
   const reload = async () => {
     try {
-      const response = await axios.get('/admin/api/laporan');
+      const response = await axios.get('/admin/api/transaksi');
       const hasil = await response.data;
       const result = hasil.data
       setDatapenjualan(result)
-      console.log('data',result)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -62,71 +61,7 @@ const Laporan = () => {
       name: 'Kasir',
       selector: (row: any) => row.kasir,
     },
-    {
-      name: 'Nama Barang',
-      selector: (row: any) => row.detailTransaksiTb,
-      cell: (row: any) => (
-        <div>
-          {row.detailTransaksiTb?.map((item: any, index: any) => (
-            <div
-              key={index}
-              className="mt-4 mb-4"
-            >
-              {item.BarangTb.namaBarang.length > 20 ? `${item.BarangTb.namaBarang.slice(0, 20)}...` : item.BarangTb.namaBarang}
-            </div>
-          ))}
-        </div>
-      ),
-      width: '200px'
-    },
-    {
-      name: 'Harga Jual',
-      selector: (row: any) => row.detailTransaksiTb,
-      cell: (row: any) => (
-        <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
-            <div key={index}
-              className="mt-4 mb-4"
-            >
-              {rupiah(item.hargaJual)}
-            </div>
-          ))}
-        </div>
-      ),
-      width: '150px'
-    },
-    {
-      name: 'Qty',
-      selector: (row: any) => row.detailTransaksiTb,
-      cell: (row: any) => (
-        <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
-            <div key={index}
-              className="mt-4 mb-4"
-            >
-              {item.qty}
-            </div>
-          ))}
-        </div>
-      ),
-      width: '80px'
-    },
-    {
-      name: 'Sub Total',
-      selector: (row: any) => row.detailTransaksiTb,
-      cell: (row: any) => (
-        <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
-            <div key={index}
-              className="mt-4 mb-4"
-            >
-              {rupiah(Number(item.hargaJual) * Number(item.qty))}
-            </div>
-          ))}
-        </div>
-      ),
-      width: '180px'
-    },
+   
   ];
 
   return (
