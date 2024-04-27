@@ -36,7 +36,7 @@ const LabaPenjualan = () => {
       let total = 0;
       let totallaba = 0;
       x.forEach((item: any) => {
-        const y = item.detailTransaksiTb
+        const y = item.DetailPenjualanTb
         y.forEach((item: any) => {
           total += (Number(item.hargaJual) * Number(item.qty));
           totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
@@ -75,7 +75,7 @@ const LabaPenjualan = () => {
     const isidata = xxx.map((item: any) => ({
       nofaktur: item.nofaktur,
       tanggal: item.tanggal,
-      detailTransaksiTb: item.detailTransaksiTb,
+      DetailPenjualanTb: item.DetailPenjualanTb,
     }));
     setDatapenjualan(isidata);
     let x = []
@@ -83,7 +83,7 @@ const LabaPenjualan = () => {
     let total = 0;
     let totallaba = 0;
     x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
+      const y = item.DetailPenjualanTb
       y.forEach((item: any) => {
         total += (Number(item.hargaJual) * Number(item.qty));
         totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
@@ -100,7 +100,7 @@ const LabaPenjualan = () => {
     let total = 0;
     let totallaba = 0;
     x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
+      const y = item.DetailPenjualanTb
       y.forEach((item: any) => {
         total += (Number(item.hargaJual) * Number(item.qty));
         totallaba += ((Number(item.hargaJual) * Number(item.qty)) - (Number(item.hargaModal) * Number(item.qty)));
@@ -130,10 +130,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Nama Barang',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: any) => (
+          {row.DetailPenjualanTb?.map((item: any, index: any) => (
             <div
               key={index}
               className="mt-4 mb-4"
@@ -147,10 +147,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Harga Modal',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -163,10 +163,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -179,10 +179,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Qty',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -195,10 +195,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Laba',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -211,10 +211,10 @@ const LabaPenjualan = () => {
     },
     {
       name: 'Sub Total',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >

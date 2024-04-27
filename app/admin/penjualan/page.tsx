@@ -35,7 +35,7 @@ const Penjualan = () => {
       x = result
       let total = 0;
       x.forEach((item: any) => {
-        const y = item.detailTransaksiTb
+        const y = item.DetailPenjualanTb
         y.forEach((item: any) => {
           total += (Number(item.hargaJual) * Number(item.qty));
         })
@@ -69,14 +69,14 @@ const Penjualan = () => {
       nofaktur: item.nofaktur,
       tanggal: item.tanggal,
       kasir: item.kasir,
-      detailTransaksiTb: item.detailTransaksiTb,
+      DetailPenjualanTb: item.DetailPenjualanTb,
     }));
     setDatapenjualan(isidata);
     let x = []
     x = isidata
     let total = 0;
     x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
+      const y = item.DetailPenjualanTb
       y.forEach((item: any) => {
         total += (Number(item.hargaJual) * Number(item.qty));
       })
@@ -90,7 +90,7 @@ const Penjualan = () => {
     x = semuadata
     let total = 0;
     x.forEach((item: any) => {
-      const y = item.detailTransaksiTb
+      const y = item.DetailPenjualanTb
       y.forEach((item: any) => {
         total += (Number(item.hargaJual) * Number(item.qty));
       })
@@ -126,10 +126,10 @@ const Penjualan = () => {
     },
     {
       name: 'Nama Barang',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: any) => (
+          {row.DetailPenjualanTb?.map((item: any, index: any) => (
             <div
               key={index}
               className="mt-4 mb-4"
@@ -143,10 +143,10 @@ const Penjualan = () => {
     },
     {
       name: 'Harga Jual',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -159,10 +159,10 @@ const Penjualan = () => {
     },
     {
       name: 'Qty',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >
@@ -175,10 +175,10 @@ const Penjualan = () => {
     },
     {
       name: 'Sub Total',
-      selector: (row: any) => row.detailTransaksiTb,
+      selector: (row: any) => row.DetailPenjualanTb,
       cell: (row: any) => (
         <div>
-          {row.detailTransaksiTb?.map((item: any, index: number) => (
+          {row.DetailPenjualanTb?.map((item: any, index: number) => (
             <div key={index}
               className="mt-4 mb-4"
             >

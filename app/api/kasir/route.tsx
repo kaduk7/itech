@@ -16,7 +16,23 @@ export const POST = async (request: Request) => {
         },
     })
 
+    await prisma.penjualanTb.create({
+        data: {
+            nofaktur: String(formData.get('nofaktur')),
+            kasir: String(formData.get('kasir')),
+            tanggal:String(formData.get('tanggal')),
+            totalItem: Number(formData.get('totalItem')),
+            totalBayar: Number(formData.get('totalBayar')),
+        },
+    })
+
     const lastId = await prisma.transaksiTB.findFirst({
+        orderBy: {
+            id: 'desc',
+        },
+    });
+
+    const penjualanId = await prisma.penjualanTb.findFirst({
         orderBy: {
             id: 'desc',
         },
@@ -51,6 +67,26 @@ export const POST = async (request: Request) => {
                 },
             })
         }
+    }
+
+    if (penjualanId) {
+        const noId = penjualanId.id;
+        const pilihbarang = JSON.parse(String(formData.get('selected'))) as any[];
+
+        var x = [];
+        for (let i = 0; i < pilihbarang.length; i++) {
+            x.push({
+                barangId: pilihbarang[i].id,
+                penjualanId: noId,
+                hargaModal: Number(pilihbarang[i].hargaModal),
+                hargaJual: Number(pilihbarang[i].hargaJual),
+                qty: Number(pilihbarang[i].qty),
+            });
+        }
+
+        await prisma.detailPenjualanTb.createMany({
+            data: x
+        })
     }
     return NextResponse.json({ pesan: 'berhasil' })
 }

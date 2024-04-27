@@ -17,9 +17,9 @@ const prisma = new PrismaClient()
 // }
 
 export const GET = async () => {
-  const laporan = await prisma.transaksiTB.findMany({
+  const laporan = await prisma.penjualanTb.findMany({
     include: {
-      detailTransaksiTb: {
+      DetailPenjualanTb: {
         include: {
           BarangTb: true,
         }
