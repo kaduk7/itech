@@ -4,7 +4,7 @@ import { KategoriTb } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-
+export const dynamic = 'force-dynamic'; 
 
 
 export const GET = async (request: Request, { params }: { params: { id: string } }) => {

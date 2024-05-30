@@ -5,7 +5,7 @@ import * as bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
-
+export const dynamic = 'force-dynamic'; 
 
 export const POST = async (request: Request) => {
 

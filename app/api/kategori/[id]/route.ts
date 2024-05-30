@@ -4,6 +4,8 @@ import { KategoriTb } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
+export const dynamic = 'force-dynamic'; 
+
 export const PATCH = async (request: Request, { params }: { params: { id: string } }) => {
     const body: KategoriTb = await request.json()
     const kategori = await prisma.kategoriTb.update({

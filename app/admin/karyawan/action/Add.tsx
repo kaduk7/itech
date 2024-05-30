@@ -61,7 +61,7 @@ function Add({ reload }: { reload: Function }) {
     function clearForm() {
         setNama('')
         setTempatlahir('')
-        setTanggallahir('')
+        setTanggallahir(tanggalHariIni)
         setAlamat('')
         setHp('')
         setPassword('')

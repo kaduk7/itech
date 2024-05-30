@@ -3,6 +3,8 @@ import { PrismaClient, KategoriTb } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
+export const dynamic = 'force-dynamic'; 
+
 export const POST = async (request: Request) => {
 
     const body: KategoriTb = await request.json()

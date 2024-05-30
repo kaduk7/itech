@@ -4,6 +4,8 @@ import * as bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
+export const dynamic = 'force-dynamic'; 
+
 export const PATCH = async (request: Request, { params }: { params: { id: string } }) => {
     const formData = await request.formData()
     const newpass = formData.get('newpass')
