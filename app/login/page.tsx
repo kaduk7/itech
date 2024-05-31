@@ -68,60 +68,60 @@ const Login = () => {
   };
 
   return (
-    <div className="authincation h-100 common-img-bg">
+    <div className="authincation h-100 commonImgBg">
       <div className="container-fluid h-100">
         <div className="row h-100">
           <div className="col-lg-6 col-md-12 col-sm-12 mx-auto align-self-center">
             <div className="login-form">
               <div className="text-center">
                 <img src="/tema/images/jambaks.png" width='200' height='200' className="mt-5 mb-3" alt="" />
-                <h3 className="title" style={{ color:'aquamarine' }}>Djambak Swalayan</h3>
-                <p style={{ color:'ghostwhite' }}>Selamat Datang di Website Djambak Swalayan</p>
+                {/* <h3 className="title" style={{ color: 'aquamarine' }}>Djambak Swalayan</h3> */}
+                <p style={{ color: 'black',fontWeight:"bold" }}>Selamat Datang di Website Djambak Swalayan</p>
               </div>
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    {/* <label className="mb-1" style={{ color:'#ec8200',fontSize:18,fontFamily:"initial" }}>Username</label> */}
-                    <input
-                      type="email"
-                      className="form-control form-control"
-                      onChange={(e) => setUsernama(e.target.value)}
-                      placeholder="Username"
-                    />
-                  </div>
-                  <div className="mb-4 position-relative">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  {/* <label className="mb-1" style={{ color:'#ec8200',fontSize:18,fontFamily:"initial" }}>Username</label> */}
+                  <input
+                    type="email"
+                    className="form-control form-control"
+                    onChange={(e) => setUsernama(e.target.value)}
+                    placeholder="Username"
+                  />
+                </div>
+                <div className="mb-4 position-relative">
                   {/* <label className="mb-1" style={{ color:'green',fontSize:18,fontFamily:"initial" }}>Password</label> */}
-                    <input
-                      required
-                      value={passwordText}
-                      type={st ? "text" : "password"}
-                      className="form-control form-control"
-                      onChange={(e) => setPasswordText(e.target.value)}
-                      placeholder="Password"
+                  <input
+                    required
+                    value={passwordText}
+                    type={st ? "text" : "password"}
+                    className="form-control form-control"
+                    onChange={(e) => setPasswordText(e.target.value)}
+                    placeholder="Password"
 
-                    />
+                  />
 
-                    <span className="show-pass eye">
-                      {st ?
-                        <a onClick={() => setSt(!st)} className="" >
-                          <i className="mdi mdi-eye" />
-                        </a>
-                        :
-                        <a onClick={() => setSt(!st)} className="" >
-                          <i className="mdi mdi-eye-off" />
-                        </a>
-                      }
-                    </span>
-                  </div>
-                  <div className="text-center mb-4">
-                    <button type="submit" className="btn btn-info  btn-block">
-                      LOGIN
-                    </button>
-                  </div>
+                  <span className="show-pass eye">
+                    {st ?
+                      <a onClick={() => setSt(!st)} className="" >
+                        <i className="mdi mdi-eye" />
+                      </a>
+                      :
+                      <a onClick={() => setSt(!st)} className="" >
+                        <i className="mdi mdi-eye-off" />
+                      </a>
+                    }
+                  </span>
+                </div>
+                <div className="text-center mb-4">
+                  <button type="submit" className="btn btn-info  btn-block">
+                    LOGIN
+                  </button>
+                </div>
 
 
-                </form>
-              </div>
+              </form>
             </div>
+          </div>
 
         </div>
       </div>
