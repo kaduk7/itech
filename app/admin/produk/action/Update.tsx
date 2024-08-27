@@ -139,11 +139,8 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
             formData.append('namaunik', namaunik)
         }
 
-        const xxx = await axios.patch(`/api/barang/${barang.id}`, formData)
+        const xxx = await axios.patch(`/admin/api/barang/${barang.id}`, formData)
 
-
-
-        setTimeout(function () {
             if (xxx.data.pesan === 'berhasil') {
                 reload()
                 setIsLoading(false)
@@ -156,7 +153,6 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                     timer: 1500
                 })
             }
-        }, 1500);
     }
 
     const handleEditorChange = (content: any, editor: any) => {
@@ -241,8 +237,9 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                                     type="number"
                                     className="form-control"
                                     value={stok}
-                                    onChange={handlechangestok}
-                                    min='1'
+                                    // onChange={handlechangestok}
+                                    onChange={(e=> setStok(e.target.value))}
+                                    // min='1'
                                 />
                             </div>
                         </div>
@@ -272,7 +269,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                             </div>
                         </div>
 
-                        {/* <div className="row">
+                        <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label className="col-sm-3 col-form-label">Foto</label>
                                 <input
@@ -292,7 +289,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                             </div>
                             <div className="mb-3 col-md-6">
                                 <label className="col-sm-3 col-form-label  mb-3"></label>
-                                {file ? <img src={preview} width={300} className="img-fluid" alt="Responsive image" /> : <img src={`${supabaseUrl}/storage/v1/object/public/${supabaseBUCKET}/barang/${previewload}`} alt={""} width={330} height={220} />}
+                                {file ? <img src={preview} width={330} height={220} className="" alt="Responsive image" /> : <img src={`${supabaseUrl}/storage/v1/object/public/${supabaseBUCKET}/barang/${previewload}`} alt={""} width={330} height={220} />}
 
                             </div>
                         </div>
@@ -320,7 +317,7 @@ function Update({ barang, daftarkategori, kategoritb, reload }: { barang: Barang
                                     onEditorChange={handleEditorChange}
                                 />
                             </div>
-                        </div> */}
+                        </div>
 
                     </Modal.Body>
                     <Modal.Footer>

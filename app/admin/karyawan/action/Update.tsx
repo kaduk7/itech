@@ -8,10 +8,12 @@ import Modal from 'react-bootstrap/Modal';
 import Swal from "sweetalert2"
 import moment from "moment"
 import Select from 'react-select'
+import { StyleSelect } from "@/app/helper";
 
 const options = [
     { value: 'Admin', label: 'Admin' },
     { value: 'Kasir', label: 'Kasir' },
+    { value: 'Teknisi', label: 'Teknisi' },
 ];
 
 function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb, reload: Function }) {
@@ -85,7 +87,7 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
             formData.append('newpass', newpass)
             formData.append('status', status)
 
-            const xxx = await axios.patch(`/api/karyawan/${karyawan.id}`, formData, {
+            const xxx = await axios.patch(`/admin/api/karyawan/${karyawan.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -211,18 +213,7 @@ function Update({ karyawan, user, reload }: { karyawan: KaryawanTb, user: UserTb
                                     options={options}
                                     onChange={handleChange}
                                     value={selectjabatan}
-                                    styles={{
-                                        control: (baseStyles, state) => ({
-                                            ...baseStyles,
-                                            borderColor: state.isFocused ? 'blue' : 'grey',
-                                            fontSize: state.isFocused ? 15 : 15,
-                                        }),
-                                        option: (baseStyles, state) => ({
-                                            ...baseStyles,
-                                            fontSize: 15,
-                                            color: "black",
-                                        }),
-                                    }}
+                                    styles={StyleSelect}
                                 />
                             </div>
                         </div>

@@ -14,7 +14,8 @@ import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { useSession } from "next-auth/react";
-import { tanggalHariIni } from "@/app/helper";
+import { tanggalHariIni, tanggalIndo, cetakfaktur, StyleSelect } from "@/app/helper";
+import { ThemeConsumer } from "@themesberg/react-bootstrap/lib/esm/ThemeProvider";
 
 const Kasir = () => {
   const session = useSession()
@@ -26,11 +27,11 @@ const Kasir = () => {
   const [barcode, setBarcode] = useState('');
   const [total, setTotal] = useState(0);
   const [totalqty, setTotalqty] = useState(0);
-  const [kembalian, setKembalian] = useState(0);
+  const [kembalian, setKembalian] = useState('');
   const [uang, setUang] = useState("");
   const [databarang, setDatabarang] = useState([])
   const [totalbayar, setTotalbayar] = useState(0);
-
+  const router = useRouter()
   const ref = useRef<HTMLInputElement>(null);
   const refuang = useRef<HTMLInputElement>(null);
   const refqty = useRef<HTMLInputElement>(null);
@@ -51,15 +52,16 @@ const Kasir = () => {
   }, [])
 
   async function otomatisnofaktur() {
-    const response = await axios.get(`/api/kasir`);
+    const response = await axios.get(`/kasir/api/kasir`);
     const data = response.data;
     setNofaktur(data)
   }
 
   async function getbarang() {
-    const response = await axios.get(`/api/barang`);
+    const response = await axios.get(`/kasir/api/barang`);
     const data = response.data;
     setDatabarang(data);
+    console.log("Ada isi", data)
   }
 
   let loadOptions = (inputValue: any, callback: any) => {
@@ -88,7 +90,6 @@ const Kasir = () => {
     setInputFields([])
     setTotal(0)
     setTotalqty(0)
-    otomatisnofaktur()
     setBarcode('')
     setTotalbayar(0)
     ref.current?.focus();
@@ -96,7 +97,7 @@ const Kasir = () => {
 
   const refresh2 = () => {
     setUang('')
-    setKembalian(0)
+    setKembalian('')
   }
 
   const handlechange = (selected: any) => {
@@ -255,7 +256,7 @@ const Kasir = () => {
   };
 
   const kalkulasi = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') {  
       e.preventDefault();
       if (Number(uang) < total) {
         return
@@ -263,7 +264,7 @@ const Kasir = () => {
       if (Number(kembalian) <= 0) {
         let totalbelanja = 0;
         totalbelanja = (Number(uang) - total)
-        setKembalian(totalbelanja)
+        setKembalian(String(totalbelanja))
         return
       }
       selesai()
@@ -385,7 +386,7 @@ const Kasir = () => {
     formData.append('kasir', String(kasir))
     formData.append('selected', JSON.stringify(inputFields))
 
-    const xxx = await axios.post(`/api/kasir`, formData, {
+    const xxx = await axios.post(`/kasir/api/kasir`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -398,20 +399,16 @@ const Kasir = () => {
         showConfirmButton: false,
         timer: 1500
       })
+
+      cetakfaktur(inputFields, total, nofaktur, kasir, tanggal, Number(uang));
+
+      otomatisnofaktur()
       refresh();
       refresh2();
       getbarang()
+
     }
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Berhasil simpan',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    refresh();
-    refresh2();
-    getbarang()
+
   }
 
   const handleUang = (e: any) => {
@@ -489,18 +486,7 @@ const Kasir = () => {
                         onChange={handlechange}
                         value={selected}
 
-                        styles={{
-                          control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? 'blue' : 'grey',
-                            fontSize: state.isFocused ? 15 : 15,
-                          }),
-                          option: (baseStyles, state) => ({
-                            ...baseStyles,
-                            fontSize: 15,
-                            color: "black",
-                          }),
-                        }}
+                        styles={StyleSelect}
                       />
                     </div>
 
@@ -678,7 +664,7 @@ const Kasir = () => {
                 <input
                   required
                   ref={refuang}
-                  type="text"
+                  type="number"
                   className="form-control"
                   style={{ backgroundColor: 'white', fontSize: 30, color: "green", borderColor: "grey", height: 60, fontWeight: 'bold' }}
                   value={uang} onKeyPress={kalkulasi}
@@ -689,13 +675,23 @@ const Kasir = () => {
             </div>
             <div className="mb-3 row">
               <label className="col-sm-4 col-form-label" style={{ fontSize: 25, color: "black" }}>Kembalian</label>
-              <label className="col-sm-8 col-form-label" style={{ fontSize: 30, color: "red", fontWeight: 'bold' }}>{kembalian ? currencyFormat(kembalian) : null}</label>
-
+              {/* <label className="col-sm-8 col-form-label" style={{ fontSize: 30, color: "red", fontWeight: 'bold' }}>{kembalian ? currencyFormat(kembalian) : null}</label> */}
+              <div className="col-sm-8">
+                <input
+                
+                  required
+                  type="number"
+                  className="form-control"
+                  style={{ backgroundColor: 'white', fontSize: 30, color: "green", borderColor: "grey", height: 60, fontWeight: 'bold' }}
+                  value={kembalian}
+                  onChange={(e)=>e.target.value}
+                />
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <button type="button" className="btn btn-danger light" onClick={handleClose}>Close</button>
-            <button type="submit" className="btn btn-primary light" onClick={selesai}>Simpan</button>
+            <button type="submit" className="btn btn-primary light" onClick={selesai} >Simpan</button>
           </Modal.Footer>
         </form>
       </Modal>

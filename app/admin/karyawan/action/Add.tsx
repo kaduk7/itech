@@ -4,11 +4,12 @@ import axios from "axios"
 import Modal from 'react-bootstrap/Modal';
 import Swal from "sweetalert2";
 import Select from 'react-select'
-import { tanggalHariIni } from "@/app/helper";
+import { StyleSelect, tanggalHariIni } from "@/app/helper";
 
 const options = [
     { value: 'Admin', label: 'Admin' },
     { value: 'Kasir', label: 'Kasir' },
+    { value: 'Teknisi', label: 'Teknisi' },
 ];
 
 function Add({ reload }: { reload: Function }) {
@@ -85,7 +86,7 @@ function Add({ reload }: { reload: Function }) {
             formData.append('password', password)
             formData.append('status', status)
 
-            const xxx = await axios.post(`/api/karyawan`, formData, {
+            const xxx = await axios.post(`/admin/api/karyawan`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -215,18 +216,7 @@ function Add({ reload }: { reload: Function }) {
                                     options={options}
                                     onChange={handleChange}
                                     value={selectjabatan}
-                                    styles={{
-                                        control: (baseStyles, state) => ({
-                                            ...baseStyles,
-                                            borderColor: state.isFocused ? 'blue' : 'grey',
-                                            fontSize: state.isFocused ? 15 : 15,
-                                        }),
-                                        option: (baseStyles, state) => ({
-                                            ...baseStyles,
-                                            fontSize: 15,
-                                            color: "black",
-                                        }),
-                                    }}
+                                    styles={StyleSelect}
                                 />
                             </div>
                         </div>

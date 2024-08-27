@@ -33,8 +33,8 @@ model BarangTb {
 
   KategoriTb         KategoriTb           @relation(fields: [kategoriId], references: [id], onDelete: Cascade)
   DetailtambahstokTb DetailtambahstokTb[]
-  detailTransaksiTb  DetailTransaksiTb[]
-  DetailPenjualanTb DetailPenjualanTb[]
+  // detailTransaksiTb  DetailTransaksiTb[]
+  DetailPenjualanTb  DetailPenjualanTb[]
 }
 
 model KategoriTb {
@@ -72,32 +72,32 @@ model DetailtambahstokTb {
   TambahstokTb TambahstokTb @relation(fields: [tambahstokId], references: [id], onDelete: Cascade)
 }
 
-model TransaksiTB {
-  id         Int      @id @default(autoincrement())
-  nofaktur   String   @unique
-  tanggal    DateTime
-  kasir      String
-  totalItem  Int
-  totalBayar Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+// model TransaksiTB {
+//   id         Int      @id @default(autoincrement())
+//   nofaktur   String   @unique
+//   tanggal    DateTime
+//   kasir      String
+//   totalItem  Int
+//   totalBayar Int
+//   createdAt  DateTime @default(now())
+//   updatedAt  DateTime @updatedAt
 
-  detailTransaksiTb DetailTransaksiTb[]
-}
+//   detailTransaksiTb DetailTransaksiTb[]
+// }
 
-model DetailTransaksiTb {
-  id          Int      @id @default(autoincrement())
-  barangId    Int
-  transaksiId Int
-  hargaModal  Int
-  hargaJual   Int
-  qty         Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+// model DetailTransaksiTb {
+//   id          Int      @id @default(autoincrement())
+//   barangId    Int
+//   transaksiId Int
+//   hargaModal  Int
+//   hargaJual   Int
+//   qty         Int
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
 
-  BarangTb    BarangTb    @relation(fields: [barangId], references: [id], onDelete: Cascade)
-  TransaksiTB TransaksiTB @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
-}
+//   BarangTb    BarangTb    @relation(fields: [barangId], references: [id], onDelete: Cascade)
+//   TransaksiTB TransaksiTB @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+// }
 
 model KaryawanTb {
   id           Int      @id @default(autoincrement())
@@ -150,4 +150,27 @@ model DetailPenjualanTb {
 
   BarangTb    BarangTb    @relation(fields: [barangId], references: [id], onDelete: Cascade)
   PenjualanTb PenjualanTb @relation(fields: [penjualanId], references: [id], onDelete: Cascade)
+}
+
+model ServisTb {
+  id             Int      @id @default(autoincrement())
+  kodeServis     String
+  tanggal        DateTime
+  nama           String
+  alamat         String
+  hp             String
+  namaBarang     String
+  noSeri         String
+  perlengkapan   String
+  jenis          String
+  detailSoftware String
+  detailHardware String
+  status         String
+  namaTeknisi    String
+  biayaSoftware  Int?
+  biayaHardware  Int?
+  biayaCancel    Int?
+  keterangan     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

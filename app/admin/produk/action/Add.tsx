@@ -68,13 +68,13 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
         }
         setHargaJual(harjual);
     }
-    const handlechangestok = (e: any) => {
-        let stok = e.target.value
-        if (parseInt(stok) <= 0) {
-            stok = '';
-        }
-        setStok(stok);
-    }
+    // const handlechangestok = (e: any) => {
+    //     let stok = e.target.value
+    //     if (parseInt(stok) <= 0) {
+    //         stok = '';
+    //     }
+    //     setStok(stok);
+    // }
 
     function clearForm() {
         setKodebarang('')
@@ -131,12 +131,12 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                 formData.append('namaunik', namaunik)
             }
 
-            const xxx = await axios.post(`/api/barang`, formData, {
+            const xxx = await axios.post(`/admin/api/barang`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            setTimeout(function () {
+       
                 if (xxx.data.pesan === 'kode barang sudah ada') {
                     setIsLoading(false)
                     Swal.fire({
@@ -161,7 +161,7 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                         timer: 1500
                     })
                 }
-            }, 1500);
+            
         } catch (error) {
             console.error('Error:', error);
         }
@@ -249,8 +249,9 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                                     type="number"
                                     className="form-control"
                                     value={stok}
-                                    onChange={handlechangestok}
-                                    min='1'
+                                    // onChange={handlechangestok}
+                                    onChange={(e=> setStok(e.target.value))}
+                                    // min='1'
                                 />
                             </div>
                         </div>
@@ -280,7 +281,7 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                             </div>
                         </div>
 
-                        {/* <div className="row">
+                        <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label className="col-sm-3 col-form-label">Foto</label>
                                 <input
@@ -304,6 +305,7 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                                 <Editor
                                     value={deskripsi}
                                     initialValue=""
+                                    apiKey='e6x7uc1szg0c9mjyoh315prq24tm54yyyvyudgcfr197mw96'
                                     init={{
                                         height: 500,
                                         menubar: true,
@@ -322,7 +324,7 @@ function Add({ reload, daftarkategori }: { reload: Function, daftarkategori: Arr
                                     onEditorChange={handleEditorChange}
                                 />
                             </div>
-                        </div> */}
+                        </div>
 
                     </Modal.Body>
                     <Modal.Footer>
